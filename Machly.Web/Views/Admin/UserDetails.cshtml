@@ -1,0 +1,162 @@
+@model Machly.Web.Models.Admin.AdminUserDetailsDto
+@{
+    ViewData["Title"] = $"Detalle de usuario - {Model.User.Name}";
+    var returnUrl = Url.Action("UserDetails", "Admin", new { id = Model.User.Id });
+}
+
+<div class="page-header d-flex justify-content-between align-items-center flex-wrap gap-3">
+    <div>
+        <h1 class="page-title">@Model.User.Name</h1>
+        <p class="page-subtitle mb-0">@Model.User.Email</p>
+    </div>
+    <a asp-action="Users" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Volver a usuarios
+    </a>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-5">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h5 class="card-title">Información</h5>
+                <dl class="row">
+                    <dt class="col-sm-4">Nombre</dt>
+                    <dd class="col-sm-8">@Model.User.Name</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">@Model.User.Email</dd>
+
+                    <dt class="col-sm-4">Rol</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge bg-@(Model.User.Role == "ADMIN" ? "dark" : Model.User.Role == "PROVIDER" ? "primary" : "success")">
+                            @Model.User.Role
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4">Creado</dt>
+                    <dd class="col-sm-8">@Model.User.CreatedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</dd>
+                </dl>
+
+                @if (Model.User.Role == "PROVIDER")
+                {
+                    <div class="mt-4">
+                        <form asp-action="VerifyProvider" method="post" class="d-flex align-items-center gap-3">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@Model.User.Id" />
+                            <input type="hidden" name="returnUrl" value="@returnUrl" />
+                            <input type="hidden" name="isVerified" value="@(!Model.User.IsVerifiedProvider)" />
+                            <div>
+                                <span class="badge bg-@(Model.User.IsVerifiedProvider ? "success" : "warning text-dark")">
+                                    @(Model.User.IsVerifiedProvider ? "Proveedor verificado" : "Pendiente de verificación")
+                                </span>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-outline-primary">
+                                @(Model.User.IsVerifiedProvider ? "Marcar como pendiente" : "Verificar proveedor")
+                            </button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-7">
+        @if (Model.User.Role == "PROVIDER")
+        {
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0">Máquinas publicadas</h5>
+                        <span class="badge bg-primary">@Model.ProviderMachines.Count</span>
+                    </div>
+                    @if (Model.ProviderMachines.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Título</th>
+                                        <th>Tipo</th>
+                                        <th>Categoria</th>
+                                        <th>Precio/Día</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var machine in Model.ProviderMachines)
+                                    {
+                                        <tr>
+                                            <td>@machine.Title</td>
+                                            <td>@machine.Type</td>
+                                            <td>@machine.Category</td>
+                                            <td>Bs. @machine.PricePerDay.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Este proveedor aún no ha publicado máquinas.</p>
+                    }
+                </div>
+            </div>
+        }
+        else if (Model.User.Role == "RENTER")
+        {
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="card-title mb-0">Reservas realizadas</h5>
+                        <span class="badge bg-success">@Model.RenterBookings.Count</span>
+                    </div>
+                    @if (Model.RenterBookings.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Máquina</th>
+                                        <th>Inicio</th>
+                                        <th>Fin</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var booking in Model.RenterBookings)
+                                    {
+                                        <tr>
+                                            <td>@booking.MachineTitle</td>
+                                            <td>@booking.Start.ToLocalTime().ToString("dd/MM/yyyy")</td>
+                                            <td>@booking.End.ToLocalTime().ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <span class="badge bg-@(booking.Status == "CONFIRMED" ? "success" : booking.Status == "COMPLETED" ? "info" : "warning text-dark")">
+                                                    @booking.Status
+                                                </span>
+                                            </td>
+                                            <td>Bs. @booking.TotalPrice.ToString("N2")</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">Este arrendatario aún no tiene reservas.</p>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card shadow-sm h-100">
+                <div class="card-body d-flex align-items-center justify-content-center text-muted">
+                    No hay información adicional para este rol.
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

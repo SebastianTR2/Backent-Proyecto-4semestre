@@ -1,0 +1,157 @@
+@using System.Text.Json
+@model object
+@{
+    ViewData["Title"] = "Dashboard Administrativo";
+    
+    // Parse JSON to extract values
+    var jsonString = JsonSerializer.Serialize(Model);
+    var jsonDoc = JsonDocument.Parse(jsonString);
+    var root = jsonDoc.RootElement;
+    
+    var totalUsers = root.TryGetProperty("totalUsers", out var users) ? users.GetInt32() : 0;
+    var totalProviders = root.TryGetProperty("totalProviders", out var providers) ? providers.GetInt32() : 0;
+    var totalRenters = root.TryGetProperty("totalRenters", out var renters) ? renters.GetInt32() : 0;
+    var totalMachines = root.TryGetProperty("totalMachines", out var machines) ? machines.GetInt32() : 0;
+    var totalBookings = root.TryGetProperty("totalBookings", out var bookings) ? bookings.GetInt32() : 0;
+    var activeBookings = root.TryGetProperty("activeBookings", out var active) ? active.GetInt32() : 0;
+    var totalRevenue = root.TryGetProperty("totalRevenue", out var revenue) ? revenue.GetDecimal() : 0;
+}
+
+<div class="dashboard-page">
+    <div class="dashboard-header">
+        <div>
+            <h1 class="dashboard-title">Dashboard Administrativo</h1>
+            <p class="dashboard-subtitle">Vista general de la plataforma Machly</p>
+        </div>
+        <div class="dashboard-actions">
+            <span class="dashboard-date">
+                <i class="fas fa-calendar-alt me-2"></i>@DateTime.Now.ToString("dd MMMM yyyy")
+            </span>
+        </div>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row g-4 mb-4">
+        <!-- Total Usuarios -->
+        <div class="col-md-6 col-lg-3">
+            <div class="kpi-card kpi-card-primary">
+                <div class="kpi-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-value">@totalUsers</h3>
+                    <p class="kpi-label">Total Usuarios</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Máquinas -->
+        <div class="col-md-6 col-lg-3">
+            <div class="kpi-card kpi-card-success">
+                <div class="kpi-icon">
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-value">@totalMachines</h3>
+                    <p class="kpi-label">Total Máquinas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Reservas -->
+        <div class="col-md-6 col-lg-3">
+            <div class="kpi-card kpi-card-warning">
+                <div class="kpi-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-value">@totalBookings</h3>
+                    <p class="kpi-label">Total Reservas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ingresos Totales -->
+        <div class="col-md-6 col-lg-3">
+            <div class="kpi-card kpi-card-info">
+                <div class="kpi-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="kpi-content">
+                    <h3 class="kpi-value">Bs. @totalRevenue.ToString("N2")</h3>
+                    <p class="kpi-label">Ingresos Totales</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Secondary Stats -->
+    <div class="row g-4 mb-4">
+        <!-- Proveedores -->
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-user-tie stat-icon"></i>
+                    <h4 class="stat-title">Proveedores</h4>
+                </div>
+                <div class="stat-body">
+                    <h2 class="stat-value">@totalProviders</h2>
+                    <p class="stat-description">Proveedores registrados</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arrendatarios -->
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-user-check stat-icon"></i>
+                    <h4 class="stat-title">Arrendatarios</h4>
+                </div>
+                <div class="stat-body">
+                    <h2 class="stat-value">@totalRenters</h2>
+                    <p class="stat-description">Arrendatarios activos</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reservas Activas -->
+        <div class="col-md-4">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <i class="fas fa-clock stat-icon"></i>
+                    <h4 class="stat-title">Reservas Activas</h4>
+                </div>
+                <div class="stat-body">
+                    <h2 class="stat-value">@activeBookings</h2>
+                    <p class="stat-description">En proceso o confirmadas</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row g-4">
+        <div class="col-12">
+            <div class="dashboard-section">
+                <h3 class="section-title-modern">
+                    <i class="fas fa-bolt me-2"></i>Acciones Rápidas
+                </h3>
+                <div class="quick-actions">
+                    <a asp-action="Users" class="quick-action-card">
+                        <i class="fas fa-users"></i>
+                        <span>Gestionar Usuarios</span>
+                    </a>
+                    <a asp-action="Machines" class="quick-action-card">
+                        <i class="fas fa-tractor"></i>
+                        <span>Ver Máquinas</span>
+                    </a>
+                    <a asp-action="Bookings" class="quick-action-card">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Ver Reservas</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
