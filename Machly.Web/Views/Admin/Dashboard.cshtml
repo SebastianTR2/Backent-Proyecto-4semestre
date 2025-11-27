@@ -1,157 +1,171 @@
-@using System.Text.Json
-@model object
+@model Machly.Web.Models.Admin.AdminDashboardDto
+
 @{
-    ViewData["Title"] = "Dashboard Administrativo";
-    
-    // Parse JSON to extract values
-    var jsonString = JsonSerializer.Serialize(Model);
-    var jsonDoc = JsonDocument.Parse(jsonString);
-    var root = jsonDoc.RootElement;
-    
-    var totalUsers = root.TryGetProperty("totalUsers", out var users) ? users.GetInt32() : 0;
-    var totalProviders = root.TryGetProperty("totalProviders", out var providers) ? providers.GetInt32() : 0;
-    var totalRenters = root.TryGetProperty("totalRenters", out var renters) ? renters.GetInt32() : 0;
-    var totalMachines = root.TryGetProperty("totalMachines", out var machines) ? machines.GetInt32() : 0;
-    var totalBookings = root.TryGetProperty("totalBookings", out var bookings) ? bookings.GetInt32() : 0;
-    var activeBookings = root.TryGetProperty("activeBookings", out var active) ? active.GetInt32() : 0;
-    var totalRevenue = root.TryGetProperty("totalRevenue", out var revenue) ? revenue.GetDecimal() : 0;
+    ViewData["Title"] = "Dashboard Admin";
+    Layout = "_Layout";
 }
 
-<div class="dashboard-page">
-    <div class="dashboard-header">
-        <div>
-            <h1 class="dashboard-title">Dashboard Administrativo</h1>
-            <p class="dashboard-subtitle">Vista general de la plataforma Machly</p>
-        </div>
-        <div class="dashboard-actions">
-            <span class="dashboard-date">
-                <i class="fas fa-calendar-alt me-2"></i>@DateTime.Now.ToString("dd MMMM yyyy")
-            </span>
-        </div>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h3 mb-0 text-gray-800">Dashboard General</h2>
+        <a asp-action="NotificationsCreate" class="btn btn-primary">
+            <i class="fas fa-bell me-2"></i>Enviar Notificación Global
+        </a>
     </div>
 
-    <!-- KPI Cards -->
+    <!-- Stats Cards -->
     <div class="row g-4 mb-4">
-        <!-- Total Usuarios -->
-        <div class="col-md-6 col-lg-3">
-            <div class="kpi-card kpi-card-primary">
-                <div class="kpi-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="kpi-content">
-                    <h3 class="kpi-value">@totalUsers</h3>
-                    <p class="kpi-label">Total Usuarios</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Total Máquinas -->
-        <div class="col-md-6 col-lg-3">
-            <div class="kpi-card kpi-card-success">
-                <div class="kpi-icon">
-                    <i class="fas fa-tractor"></i>
-                </div>
-                <div class="kpi-content">
-                    <h3 class="kpi-value">@totalMachines</h3>
-                    <p class="kpi-label">Total Máquinas</p>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Usuarios</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalUsers</div>
+                            <small class="text-muted">@Model.TotalProviders Proveedores / @Model.TotalRenters Renters</small>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Total Reservas -->
-        <div class="col-md-6 col-lg-3">
-            <div class="kpi-card kpi-card-warning">
-                <div class="kpi-icon">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="kpi-content">
-                    <h3 class="kpi-value">@totalBookings</h3>
-                    <p class="kpi-label">Total Reservas</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Ingresos Totales -->
-        <div class="col-md-6 col-lg-3">
-            <div class="kpi-card kpi-card-info">
-                <div class="kpi-icon">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="kpi-content">
-                    <h3 class="kpi-value">Bs. @totalRevenue.ToString("N2")</h3>
-                    <p class="kpi-label">Ingresos Totales</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Secondary Stats -->
-    <div class="row g-4 mb-4">
-        <!-- Proveedores -->
-        <div class="col-md-4">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <i class="fas fa-user-tie stat-icon"></i>
-                    <h4 class="stat-title">Proveedores</h4>
-                </div>
-                <div class="stat-body">
-                    <h2 class="stat-value">@totalProviders</h2>
-                    <p class="stat-description">Proveedores registrados</p>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Máquinas</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalMachines</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-tractor fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Arrendatarios -->
-        <div class="col-md-4">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <i class="fas fa-user-check stat-icon"></i>
-                    <h4 class="stat-title">Arrendatarios</h4>
-                </div>
-                <div class="stat-body">
-                    <h2 class="stat-value">@totalRenters</h2>
-                    <p class="stat-description">Arrendatarios activos</p>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Reservas (Total)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.TotalBookings</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Reservas Activas -->
-        <div class="col-md-4">
-            <div class="stat-card">
-                <div class="stat-header">
-                    <i class="fas fa-clock stat-icon"></i>
-                    <h4 class="stat-title">Reservas Activas</h4>
-                </div>
-                <div class="stat-body">
-                    <h2 class="stat-value">@activeBookings</h2>
-                    <p class="stat-description">En proceso o confirmadas</p>
+        <div class="col-xl-3 col-md-6">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Reservas (30 días)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@Model.BookingsLast30Days</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="row g-4">
-        <div class="col-12">
-            <div class="dashboard-section">
-                <h3 class="section-title-modern">
-                    <i class="fas fa-bolt me-2"></i>Acciones Rápidas
-                </h3>
-                <div class="quick-actions">
-                    <a asp-action="Users" class="quick-action-card">
-                        <i class="fas fa-users"></i>
-                        <span>Gestionar Usuarios</span>
-                    </a>
-                    <a asp-action="Machines" class="quick-action-card">
-                        <i class="fas fa-tractor"></i>
-                        <span>Ver Máquinas</span>
-                    </a>
-                    <a asp-action="Bookings" class="quick-action-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <span>Ver Reservas</span>
-                    </a>
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Top Categories Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Categorías Más Populares</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="categoriesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Machines Table -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Máquinas Más Reservadas</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Máquina</th>
+                                    <th>Reservas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var machine in Model.TopMachines)
+                                {
+                                    <tr>
+                                        <td>@machine.MachineTitle</td>
+                                        <td>@machine.BookingsCount</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data for Categories Chart
+        var ctx = document.getElementById("categoriesChart");
+        var categories = @Html.Raw(Json.Serialize(Model.TopCategories.Select(c => c.Category)));
+        var counts = @Html.Raw(Json.Serialize(Model.TopCategories.Select(c => c.Count)));
+
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: categories,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b'],
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a', '#be2617'],
+                    hoverBorderColor: "rgba(234, 236, 244, 1)",
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    caretPadding: 10,
+                },
+                legend: {
+                    display: true,
+                    position: 'bottom'
+                },
+                cutoutPercentage: 80,
+            },
+        });
+    </script>
+}

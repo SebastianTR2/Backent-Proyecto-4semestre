@@ -17,6 +17,7 @@
                     <th>Título</th>
                     <th>Tipo</th>
                     <th>Precio/Día</th>
+                    <th>Estado</th>
                     <th>Rating</th>
                     <th>Acciones</th>
                 </tr>
@@ -28,12 +29,37 @@
                         <td>@machine.Title</td>
                         <td>@machine.Type</td>
                         <td>Bs. @machine.PricePerDay.ToString("N2")</td>
+                        <td>
+                            @if (machine.IsOutOfService)
+                            {
+                                <span class="badge bg-danger">Fuera de Servicio</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Disponible</span>
+                            }
+                        </td>
                         <td>@machine.RatingAvg.ToString("F1") (@machine.RatingCount)</td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@machine.Id" class="btn btn-sm btn-outline-primary">Editar</a>
-                            <form asp-action="Delete" asp-route-id="@machine.Id" method="post" class="d-inline" onsubmit="return confirm('¿Está seguro de eliminar esta máquina?');">
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
-                            </form>
+                            <div class="btn-group">
+                                <a asp-action="Calendar" asp-route-id="@machine.Id" class="btn btn-sm btn-info" title="Ver Calendario">
+                                    <i class="fas fa-calendar-alt"></i>
+                                </a>
+                                <a asp-action="Edit" asp-route-id="@machine.Id" class="btn btn-sm btn-outline-primary" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form asp-action="ToggleStatus" asp-route-id="@machine.Id" method="post" class="d-inline">
+                                    <input type="hidden" name="isOutOfService" value="@(!machine.IsOutOfService)" />
+                                    <button type="submit" class="btn btn-sm @(machine.IsOutOfService ? "btn-success" : "btn-warning")" title="@(machine.IsOutOfService ? "Activar" : "Desactivar")">
+                                        <i class="fas @(machine.IsOutOfService ? "fa-check" : "fa-ban")"></i>
+                                    </button>
+                                </form>
+                                <form asp-action="Delete" asp-route-id="@machine.Id" method="post" class="d-inline" onsubmit="return confirm('¿Está seguro de eliminar esta máquina?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 }

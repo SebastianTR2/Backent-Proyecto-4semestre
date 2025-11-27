@@ -1,0 +1,89 @@
+@model Machly.Web.Models.NotificationRequest
+
+@{
+    ViewData["Title"] = "Enviar Notificación";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h2>Enviar Notificación Global</h2>
+    <hr />
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success">@TempData["Success"]</div>
+    }
+
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="NotificationsCreate" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Destino</label>
+                    <select asp-for="Target" class="form-select" id="targetSelect">
+                        <option value="USER">Usuario Específico</option>
+                        <option value="ROLE">Rol Completo</option>
+                        <option value="ALL">Todos los Usuarios</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="roleGroup" style="display:none;">
+                    <label class="form-label">Rol</label>
+                    <select asp-for="Role" class="form-select">
+                        <option value="">Seleccione un rol...</option>
+                        <option value="ADMIN">Administrador</option>
+                        <option value="PROVIDER">Proveedor</option>
+                        <option value="RENTER">Arrendatario</option>
+                    </select>
+                </div>
+
+                <div class="mb-3" id="userGroup">
+                    <label class="form-label">ID de Usuario</label>
+                    <input asp-for="UserId" class="form-control" placeholder="ID del usuario destino" />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Título</label>
+                    <input asp-for="Title" class="form-control" required />
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Mensaje</label>
+                    <textarea asp-for="Message" class="form-control" rows="4" required></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Tipo (Opcional)</label>
+                    <input asp-for="Type" class="form-control" placeholder="INFO, WARNING, etc." />
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar Notificación</button>
+                <a asp-action="Dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const targetSelect = document.getElementById('targetSelect');
+        const roleGroup = document.getElementById('roleGroup');
+        const userGroup = document.getElementById('userGroup');
+
+        function updateVisibility() {
+            const val = targetSelect.value;
+            if (val === 'ROLE') {
+                roleGroup.style.display = 'block';
+                userGroup.style.display = 'none';
+            } else if (val === 'USER') {
+                roleGroup.style.display = 'none';
+                userGroup.style.display = 'block';
+            } else {
+                roleGroup.style.display = 'none';
+                userGroup.style.display = 'none';
+            }
+        }
+
+        targetSelect.addEventListener('change', updateVisibility);
+        updateVisibility(); // Init
+    </script>
+}

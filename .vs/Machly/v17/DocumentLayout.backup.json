@@ -3,8 +3,87 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\Downloads\\Machly\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\seed\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\seed\\seeddata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\graphql\\queries\\query.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\graphql\\queries\\query.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\graphql\\mutations\\mutation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\graphql\\mutations\\mutation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\graphql\\inputs\\inputs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\graphql\\inputs\\inputs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\utils\\jwtdelegatinghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\utils\\jwtdelegatinghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\renter\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\renter\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\admin\\machines.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\admin\\machines.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\admin\\logs.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\admin\\logs.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\controllers\\machinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\controllers\\machinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\renter\\favorites.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\renter\\favorites.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\controllers\\supportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\controllers\\supportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\notifications\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\notifications\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\services\\favoritesapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\services\\favoritesapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\services\\machinesapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\services\\machinesapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -39,39 +118,16 @@
       "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\services\\adminapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\services\\adminapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\services\\authapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\services\\authapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\utils\\jwtdelegatinghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\utils\\jwtdelegatinghandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\controllers\\providermachinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\controllers\\providermachinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\models\\machine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|c:\\users\\pc\\downloads\\machly\\machly.web\\views\\providermachines\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{1FFA3758-4663-4316-86EE-286670DADF3E}|Machly.Web\\Machly.Web.csproj|solutionrelative:machly.web\\views\\providermachines\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|c:\\users\\pc\\downloads\\machly\\machly.api\\controllers\\machinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{01944346-31B7-4526-A03B-7F136CDEF605}|Machly.Api\\Machly.Api.csproj|solutionrelative:machly.api\\controllers\\machinescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -81,7 +137,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 16,
+          "SelectedChildIndex": 25,
           "Children": [
             {
               "$type": "Bookmark",
@@ -149,20 +205,208 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Repositories\\UserRepository.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\Repositories\\UserRepository.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Repositories\\UserRepository.cs",
+              "RelativeToolTip": "Machly.Api\\Repositories\\UserRepository.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAIAwwBYAAABaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T08:10:36.717Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SeedData.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Seed\\SeedData.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\Seed\\SeedData.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Seed\\SeedData.cs",
+              "RelativeToolTip": "Machly.Api\\Seed\\SeedData.cs",
+              "ViewState": "AgIAACwAAAAAAAAAAAAnwEAAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T08:10:35.767Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Query.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Queries\\Query.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\GraphQL\\Queries\\Query.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Queries\\Query.cs",
+              "RelativeToolTip": "Machly.Api\\GraphQL\\Queries\\Query.cs",
+              "ViewState": "AgIAAHEAAAAAAAAAAAAMwI4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T07:53:30.137Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Mutation.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Mutations\\Mutation.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\GraphQL\\Mutations\\Mutation.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Mutations\\Mutation.cs",
+              "RelativeToolTip": "Machly.Api\\GraphQL\\Mutations\\Mutation.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAAwHYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T07:53:25.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Inputs.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Inputs\\Inputs.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\GraphQL\\Inputs\\Inputs.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\GraphQL\\Inputs\\Inputs.cs",
+              "RelativeToolTip": "Machly.Api\\GraphQL\\Inputs\\Inputs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T07:53:21.383Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Renter\\Index.cshtml",
+              "RelativeDocumentMoniker": "Machly.Web\\Views\\Renter\\Index.cshtml",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Renter\\Index.cshtml",
+              "RelativeToolTip": "Machly.Web\\Views\\Renter\\Index.cshtml",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAWwFgAAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T06:42:13.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "BookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Repositories\\BookingRepository.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\Repositories\\BookingRepository.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Repositories\\BookingRepository.cs",
+              "RelativeToolTip": "Machly.Api\\Repositories\\BookingRepository.cs",
+              "ViewState": "AgIAAJwAAAAAAAAAAADwv84AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T06:42:07.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Machly.Web\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Machly.Web\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAJkAAAAAAAAAAIAwwLMAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T04:47:03.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Logs.cshtml",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Admin\\Logs.cshtml",
+              "RelativeDocumentMoniker": "Machly.Web\\Views\\Admin\\Logs.cshtml",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Admin\\Logs.cshtml",
+              "RelativeToolTip": "Machly.Web\\Views\\Admin\\Logs.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T04:32:39.082Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Machly.Api\\Controllers\\AdminController.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAewDwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T04:25:33.967Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Favorites.cshtml",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Renter\\Favorites.cshtml",
+              "RelativeDocumentMoniker": "Machly.Web\\Views\\Renter\\Favorites.cshtml",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Renter\\Favorites.cshtml",
+              "RelativeToolTip": "Machly.Web\\Views\\Renter\\Favorites.cshtml",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAYwCQAAABQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T02:47:52.287Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "SupportController.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\SupportController.cs",
+              "RelativeDocumentMoniker": "Machly.Api\\Controllers\\SupportController.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\SupportController.cs",
+              "RelativeToolTip": "Machly.Api\\Controllers\\SupportController.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAADwv1oAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T02:47:37.824Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Notifications\\Index.cshtml",
+              "RelativeDocumentMoniker": "Machly.Web\\Views\\Notifications\\Index.cshtml",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Notifications\\Index.cshtml",
+              "RelativeToolTip": "Machly.Web\\Views\\Notifications\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T02:39:56.853Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "FavoritesApiClient.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\FavoritesApiClient.cs",
+              "RelativeDocumentMoniker": "Machly.Web\\Services\\FavoritesApiClient.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\FavoritesApiClient.cs",
+              "RelativeToolTip": "Machly.Web\\Services\\FavoritesApiClient.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAADwvx8AAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T02:39:28.191Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "MachinesApiClient.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\MachinesApiClient.cs",
+              "RelativeDocumentMoniker": "Machly.Web\\Services\\MachinesApiClient.cs",
+              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\MachinesApiClient.cs",
+              "RelativeToolTip": "Machly.Web\\Services\\MachinesApiClient.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAqwGIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T02:34:14.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "Machines.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Admin\\Machines.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\Admin\\Machines.cshtml",
               "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Admin\\Machines.cshtml",
               "RelativeToolTip": "Machly.Web\\Views\\Admin\\Machines.cshtml",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAmwBUAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAYwEgAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T02:02:40.762Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T02:02:40.762Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 22,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\_ViewStart.cshtml",
@@ -170,12 +414,11 @@
               "RelativeToolTip": "Machly.Web\\Views\\_ViewStart.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T00:49:28.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:49:28.538Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 25,
               "Title": "_ViewImports.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\_ViewImports.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\_ViewImports.cshtml",
@@ -183,12 +426,11 @@
               "RelativeToolTip": "Machly.Web\\Views\\_ViewImports.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T00:49:26.714Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:49:26.714Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 23,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\Home\\Index.cshtml",
@@ -196,12 +438,11 @@
               "RelativeToolTip": "Machly.Web\\Views\\Home\\Index.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T00:49:15.138Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:49:15.138Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 24,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\Shared\\_Layout.cshtml",
@@ -209,12 +450,11 @@
               "RelativeToolTip": "Machly.Web\\Views\\Shared\\_Layout.cshtml",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-26T00:48:54.101Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:48:54.101Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 27,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Controllers\\HomeController.cs",
@@ -222,25 +462,24 @@
               "RelativeToolTip": "Machly.Web\\Controllers\\HomeController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T00:40:37.927Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-26T00:40:37.927Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 6,
               "Title": "JwtDelegatingHandler.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Utils\\JwtDelegatingHandler.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Utils\\JwtDelegatingHandler.cs",
               "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Utils\\JwtDelegatingHandler.cs",
               "RelativeToolTip": "Machly.Web\\Utils\\JwtDelegatingHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAmwCgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T02:41:04.932Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 26,
               "Title": "AccountController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Controllers\\AccountController.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Controllers\\AccountController.cs",
@@ -248,12 +487,11 @@
               "RelativeToolTip": "Machly.Web\\Controllers\\AccountController.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAEoAAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T01:11:50.615Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T01:11:50.615Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 29,
               "Title": "AuthApiClient.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\AuthApiClient.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Services\\AuthApiClient.cs",
@@ -261,12 +499,11 @@
               "RelativeToolTip": "Machly.Web\\Services\\AuthApiClient.cs",
               "ViewState": "AgIAAEIAAAAAAAAAAAAIwG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T01:10:47.841Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T01:10:47.841Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 21,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Program.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Program.cs",
@@ -274,12 +511,11 @@
               "RelativeToolTip": "Machly.Web\\Program.cs",
               "ViewState": "AgIAAEUAAAAAAAAAAAAUwGoAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T01:06:37.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T01:06:37.897Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 28,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\appsettings.json",
               "RelativeDocumentMoniker": "Machly.Web\\appsettings.json",
@@ -287,60 +523,60 @@
               "RelativeToolTip": "Machly.Web\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-11-25T01:06:10.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-25T01:06:10.203Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 10,
               "Title": "Microsoft.Common.CurrentVersion.targets",
               "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
               "RelativeToolTip": "..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\Microsoft.Common.CurrentVersion.targets",
-              "ViewState": "AgIAAPUUAAAAAAAAAAAuwBIVAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAAPUUAAAAAAAAAAAgwBEVAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
-              "WhenOpened": "2025-11-25T00:57:04.342Z"
+              "WhenOpened": "2025-11-25T00:57:04.342Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 18,
               "Title": "Machine.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Models\\Machine.cs",
               "RelativeDocumentMoniker": "Machly.Api\\Models\\Machine.cs",
               "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Models\\Machine.cs",
               "RelativeToolTip": "Machly.Api\\Models\\Machine.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABQAAAAAAAAAAAA8wDEAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T00:41:17.626Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "Machine.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Models\\Machine.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Models\\Machine.cs",
               "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Models\\Machine.cs",
               "RelativeToolTip": "Machly.Web\\Models\\Machine.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAABAAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA5wBwAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T00:40:56.675Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 13,
               "Title": "MachinesController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\MachinesController.cs",
               "RelativeDocumentMoniker": "Machly.Api\\Controllers\\MachinesController.cs",
               "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Api\\Controllers\\MachinesController.cs",
               "RelativeToolTip": "Machly.Api\\Controllers\\MachinesController.cs",
-              "ViewState": "AgIAADIAAADAHEi0wqYowAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T00:32:48.595Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 30,
               "Title": "ProviderMachinesController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Controllers\\ProviderMachinesController.cs",
               "RelativeDocumentMoniker": "Machly.Web\\Controllers\\ProviderMachinesController.cs",
@@ -352,7 +588,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 31,
               "Title": "Edit.cshtml",
               "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Views\\ProviderMachines\\Edit.cshtml",
               "RelativeDocumentMoniker": "Machly.Web\\Views\\ProviderMachines\\Edit.cshtml",
@@ -361,19 +597,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAQwCQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-25T00:30:39.738Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AdminApiClient.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\AdminApiClient.cs",
-              "RelativeDocumentMoniker": "Machly.Web\\Services\\AdminApiClient.cs",
-              "ToolTip": "C:\\Users\\PC\\Downloads\\Machly\\Machly.Web\\Services\\AdminApiClient.cs",
-              "RelativeToolTip": "Machly.Web\\Services\\AdminApiClient.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwH4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T00:29:28.827Z",
-              "EditorCaption": ""
             }
           ]
         }

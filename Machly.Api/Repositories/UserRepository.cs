@@ -10,6 +10,19 @@ namespace Machly.Api.Repositories
         public UserRepository(MongoDbContext context)
         {
             _users = context.GetCollection<User>("users");
+            CreateIndexes();
+        }
+
+        private void CreateIndexes()
+        {
+            try
+            {
+                var keys = Builders<User>.IndexKeys;
+                var emailIndex = new CreateIndexModel<User>(keys.Ascending(u => u.Email), new CreateIndexOptions { Unique = true });
+                _users.Indexes.CreateOne(emailIndex);
+                _users.Indexes.CreateOne(new CreateIndexModel<User>(keys.Ascending(u => u.Role)));
+            }
+            catch { }
         }
 
         // Obtener por email
@@ -34,5 +47,9 @@ namespace Machly.Api.Repositories
         // 🔥 NECESARIO PARA EL SEED
         public async Task<List<User>> GetAllAsync() =>
             await _users.Find(_ => true).ToListAsync();
+
+        // Obtener por Rol
+        public async Task<List<User>> GetByRoleAsync(string role) =>
+            await _users.Find(u => u.Role == role).ToListAsync();
     }
 }

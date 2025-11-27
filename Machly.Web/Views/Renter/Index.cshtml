@@ -1,4 +1,5 @@
-@model List<Booking>
+@using Machly.Web.Models
+@model List<BookingDetailDto>
 @{
     ViewData["Title"] = "Mis Reservas";
     var scope = (ViewData["Scope"]?.ToString() ?? "month").ToLowerInvariant();
@@ -64,7 +65,18 @@
                     @foreach (var booking in Model)
                     {
                         <tr>
-                            <td>@booking.MachineId</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    @if (!string.IsNullOrEmpty(booking.MachinePhotoUrl))
+                                    {
+                                        <img src="@booking.MachinePhotoUrl" class="rounded me-2" style="width: 40px; height: 40px; object-fit: cover;" />
+                                    }
+                                    <div>
+                                        <div class="fw-bold">@booking.MachineTitle</div>
+                                        <small class="text-muted">ID: @booking.MachineId.Substring(booking.MachineId.Length - 6)</small>
+                                    </div>
+                                </div>
+                            </td>
                             <td>@booking.Start.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@booking.End.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                             <td>

@@ -64,12 +64,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/Logs.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTG9ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/MachineDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFjaGluZURldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/MachineImport.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFjaGluZUltcG9ydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/MachineMap.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFjaGluZU1hcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/Machines.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTWFjaGluZXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/NotificationsCreate.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTm90aWZpY2F0aW9uc0NyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Admin/UserDetails.cshtml]
@@ -84,8 +100,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Notifications/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm90aWZpY2F0aW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/ProviderMachines/Bookings.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJNYWNoaW5lc1xCb29raW5ncy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/ProviderMachines/Calendar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJNYWNoaW5lc1xDYWxlbmRhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/ProviderMachines/Create.cshtml]
@@ -100,8 +124,40 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJNYWNoaW5lc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/ProviderMachines/Map.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJNYWNoaW5lc1xNYXAuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/ProviderMachines/TariffSimulator.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmlkZXJNYWNoaW5lc1xUYXJpZmZTaW11bGF0b3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Chat.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXENoYXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Explore.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXEV4cGxvcmUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Favorites.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXEZhdm9yaXRlcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Map.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXE1hcC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Renter/Search.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVudGVyXFNlYXJjaC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Shared/_Layout.cshtml]
@@ -110,6 +166,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Support/AdminIndex.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcG9ydFxBZG1pbkluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Support/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcG9ydFxDcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/PC/Downloads/Machly/Machly.Web/Views/Support/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3VwcG9ydFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/PC/Downloads/Machly/Machly.Web/Views/_ViewImports.cshtml]

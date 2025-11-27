@@ -31,20 +31,20 @@ namespace Machly.Web.Services
             return null;
         }
 
-        public async Task<List<Booking>> GetByUserAsync(string renterId, DateTime? from = null, DateTime? to = null)
+        public async Task<List<BookingDetailDto>> GetByUserAsync(string renterId, DateTime? from = null, DateTime? to = null)
         {
             var query = BuildDateQuery(from, to);
             var response = await _httpClient.GetAsync($"/bookings/user/{renterId}{query}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<Booking>>() ?? new List<Booking>();
+            return await response.Content.ReadFromJsonAsync<List<BookingDetailDto>>() ?? new List<BookingDetailDto>();
         }
 
-        public async Task<List<Booking>> GetByProviderAsync(DateTime? from = null, DateTime? to = null)
+        public async Task<List<BookingDetailDto>> GetByProviderAsync(DateTime? from = null, DateTime? to = null)
         {
             var query = BuildDateQuery(from, to);
             var response = await _httpClient.GetAsync($"/provider/bookings{query}");
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<List<Booking>>() ?? new List<Booking>();
+            return await response.Content.ReadFromJsonAsync<List<BookingDetailDto>>() ?? new List<BookingDetailDto>();
         }
 
         public async Task<bool> CheckInAsync(string bookingId, List<string> photos)

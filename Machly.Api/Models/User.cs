@@ -13,7 +13,8 @@ namespace Machly.Api.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
-        public string Role { get; set; } // ADMIN | PROVIDER | RENTER
+        public string Role { get; set; } = "RENTER";
+        public string? PhotoUrl { get; set; } // Optional URL for user profile photo
         public bool IsVerifiedProvider { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }

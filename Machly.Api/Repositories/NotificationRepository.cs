@@ -22,6 +22,12 @@ namespace Machly.Api.Repositories
 
                 var readIndex = Builders<Notification>.IndexKeys.Ascending(n => n.IsRead);
                 _notifications.Indexes.CreateOne(new CreateIndexModel<Notification>(readIndex));
+
+                // Índice compuesto para ordenamiento
+                var userDateIndex = Builders<Notification>.IndexKeys
+                    .Ascending(n => n.UserId)
+                    .Descending(n => n.CreatedAt);
+                _notifications.Indexes.CreateOne(new CreateIndexModel<Notification>(userDateIndex));
             }
             catch { }
         }

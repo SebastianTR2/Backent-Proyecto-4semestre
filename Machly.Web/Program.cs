@@ -56,6 +56,20 @@ builder.Services.AddHttpClient<NotificationsApiClient>(client =>
 })
 .AddHttpMessageHandler<JwtDelegatingHandler>();
 
+builder.Services.AddHttpClient<FavoritesApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+})
+.AddHttpMessageHandler<JwtDelegatingHandler>();
+
+builder.Services.AddHttpClient<SupportApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
+    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+})
+.AddHttpMessageHandler<JwtDelegatingHandler>();
+
 // ===============
 // AUTENTICACIÓN COOKIE + JWT en tokens internos
 // ===============

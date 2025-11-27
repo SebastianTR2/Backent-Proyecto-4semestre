@@ -6,10 +6,12 @@ namespace Machly.Api.Services
     public class NotificationService
     {
         private readonly NotificationRepository _repo;
+        private readonly UserRepository _userRepo;
 
-        public NotificationService(NotificationRepository repo)
+        public NotificationService(NotificationRepository repo, UserRepository userRepo)
         {
             _repo = repo;
+            _userRepo = userRepo;
         }
 
         public Task CreateAsync(Notification notification) =>
@@ -43,6 +45,42 @@ namespace Machly.Api.Services
                 Type = "BOOKING_COMPLETED"
             };
             await _repo.CreateAsync(notification);
+        }
+
+        // Envío masivo
+        public async Task SendToAllAsync(string title, string message, string type)
+        {
+            var users = await _userRepo.GetAllAsync();
+            var notifications = users.Select(u => new Notification
+            {
+                UserId = u.Id,
+                Title = title,
+                Message = message,
+                Type = type
+            });
+
+            foreach (var n in notifications)
+            {
+                await _repo.CreateAsync(n);
+            }
+        }
+
+        // Envío por rol
+        public async Task SendToRoleAsync(string role, string title, string message, string type)
+        {
+            var users = await _userRepo.GetByRoleAsync(role);
+            var notifications = users.Select(u => new Notification
+            {
+                UserId = u.Id,
+                Title = title,
+                Message = message,
+                Type = type
+            });
+
+            foreach (var n in notifications)
+            {
+                await _repo.CreateAsync(n);
+            }
         }
     }
 }

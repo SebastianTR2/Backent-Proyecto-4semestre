@@ -1,0 +1,38 @@
+@model List<Machly.Web.Models.Notification>
+
+@{
+    ViewData["Title"] = "Mis Notificaciones";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Mis Notificaciones</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info">
+            No tienes notificaciones nuevas.
+        </div>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var notification in Model.OrderByDescending(n => n.CreatedAt))
+            {
+                <div class="list-group-item list-group-item-action flex-column align-items-start @(notification.IsRead ? "" : "active")">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@notification.Title</h5>
+                        <small>@notification.CreatedAt.ToLocalTime().ToString("g")</small>
+                    </div>
+                    <p class="mb-1">@notification.Message</p>
+                    
+                    @if (!notification.IsRead)
+                    {
+                        <form asp-action="MarkAsRead" asp-route-id="@notification.Id" method="post" class="mt-2">
+                            <button type="submit" class="btn btn-sm btn-light">Marcar como leída</button>
+                        </form>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>

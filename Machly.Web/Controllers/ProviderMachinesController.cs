@@ -22,7 +22,10 @@ namespace Machly.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var machines = await _machinesApiClient.GetByProviderAsync();
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId)) return RedirectToAction("Login", "Account");
+
+            var machines = await _machinesApiClient.GetByProviderAsync(userId);
             return View(machines);
         }
 
@@ -49,6 +52,11 @@ namespace Machly.Web.Controllers
         {
             if (!ModelState.IsValid)
                 return View(machine);
+
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId)) return RedirectToAction("Login", "Account");
+            
+            machine.ProviderId = userId; // Asegurar providerId
 
             // Asegurar estructura existente
             FixTariffs(machine);
@@ -129,7 +137,7 @@ namespace Machly.Web.Controllers
         public async Task<IActionResult> Bookings(string scope = "month", DateTime? from = null, DateTime? to = null)
         {
             var (start, end, resolvedScope) = DateRangeHelper.Resolve(scope, from, to);
-            var bookings = await _bookingsApiClient.GetByProviderAsync(start, end);
+            List<BookingDetailDto> bookings = await _bookingsApiClient.GetByProviderAsync(start, end);
             ViewData["Scope"] = resolvedScope;
             ViewData["From"] = start?.ToString("yyyy-MM-dd");
             ViewData["To"] = end?.ToString("yyyy-MM-dd");
@@ -156,6 +164,57 @@ namespace Machly.Web.Controllers
                 return RedirectToAction(nameof(Bookings));
 
             return BadRequest();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Calendar(string id)
+        {
+            var machine = await _machinesApiClient.GetByIdAsync(id);
+            if (machine == null) return NotFound();
+
+            var events = await _machinesApiClient.GetCalendarAsync(id);
+            ViewData["MachineTitle"] = machine.Title;
+            return View(events);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleStatus(string id, bool isOutOfService)
+        {
+            var result = await _machinesApiClient.ToggleStatusAsync(id, isOutOfService);
+            if (result)
+                return RedirectToAction(nameof(Index));
+
+            return BadRequest();
+        }
+        [HttpGet]
+        public IActionResult Map()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetMyMachinesGeo()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
+            var machines = await _machinesApiClient.GetByProviderAsync(userId);
+            return Json(machines);
+        }
+        [HttpGet]
+        public IActionResult TariffSimulator()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Simulate([FromBody] object data)
+        {
+            // Proxy manual rápido usando HttpClient
+            // Idealmente usar MachinesApiClient
+            // Vamos a agregar SimulateAsync a MachinesApiClient
+            var result = await _machinesApiClient.SimulateTariffAsync(data);
+            return Json(result);
         }
     }
 }

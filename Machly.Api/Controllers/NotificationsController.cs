@@ -38,16 +38,35 @@ namespace Machly.Api.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> SendNotification([FromBody] NotificationRequest request)
         {
-            var notification = new Notification
+            if (request.Target == "ALL")
             {
-                UserId = request.UserId,
-                Title = request.Title,
-                Message = request.Message,
-                Type = request.Type
-            };
+                await _service.SendToAllAsync(request.Title, request.Message, request.Type);
+                return Ok(new { message = "Sent to all users" });
+            }
+            else if (request.Target == "ROLE")
+            {
+                if (string.IsNullOrEmpty(request.Role))
+                    return BadRequest("Role is required when Target is ROLE");
 
-            await _service.CreateAsync(notification);
-            return Ok(notification);
+                await _service.SendToRoleAsync(request.Role, request.Title, request.Message, request.Type);
+                return Ok(new { message = $"Sent to role {request.Role}" });
+            }
+            else // USER
+            {
+                if (string.IsNullOrEmpty(request.UserId))
+                    return BadRequest("UserId is required when Target is USER");
+
+                var notification = new Notification
+                {
+                    UserId = request.UserId,
+                    Title = request.Title,
+                    Message = request.Message,
+                    Type = request.Type
+                };
+
+                await _service.CreateAsync(notification);
+                return Ok(notification);
+            }
         }
 
         // PUT /notifications/{id}/read - Marcar como leída

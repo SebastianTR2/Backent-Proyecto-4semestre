@@ -40,7 +40,9 @@ namespace Machly.Api.Controllers
                 .Find(_ => true)
                 .SortByDescending(u => u.CreatedAt)
                 .ToListAsync();
-            return Ok(users);
+            
+            var dtos = users.Select(MapUser).ToList();
+            return Ok(dtos);
         }
 
         // GET /admin/users/{id}
@@ -59,14 +61,18 @@ namespace Machly.Api.Controllers
             if (user.Role == "PROVIDER")
             {
                 var machines = await _machineService.GetByProviderAsync(user.Id!);
-                dto.ProviderMachines = machines.Select(m => new AdminMachineSummaryDto
+                dto.ProviderMachines = machines.Select(m => new AdminMachineListItem
                 {
                     Id = m.Id,
                     Title = m.Title,
+                    Description = m.Description,
                     Type = m.Type,
                     Category = m.Category,
                     PricePerDay = m.PricePerDay,
                     WithOperator = m.WithOperator,
+                    ProviderId = user.Id!,
+                    ProviderName = user.Name,
+                    ProviderEmail = user.Email,
                     RatingAvg = m.RatingAvg,
                     RatingCount = m.RatingCount,
                     CreatedAt = m.CreatedAt
@@ -86,11 +92,12 @@ namespace Machly.Api.Controllers
                     }
                 }
 
-                dto.RenterBookings = bookings.Select(b => new AdminBookingSummaryDto
+                dto.RenterBookings = bookings.Select(b => new AdminBookingListItem
                 {
                     Id = b.Id,
                     MachineId = b.MachineId,
                     MachineTitle = machineTitles.GetValueOrDefault(b.MachineId, "Máquina"),
+                    RenterId = user.Id!,
                     Start = b.Start,
                     End = b.End,
                     Status = b.Status,
@@ -127,20 +134,23 @@ namespace Machly.Api.Controllers
             var result = machines.Select(m =>
             {
                 var provider = providers.FirstOrDefault(p => p.Id == m.ProviderId);
-                return new
+                return new AdminMachineListItem
                 {
-                    m.Id,
-                    m.Title,
-                    m.Description,
-                    m.PricePerDay,
-                    m.Type,
-                    m.Category,
-                    m.WithOperator,
-                    m.ProviderId,
+                    Id = m.Id,
+                    Title = m.Title,
+                    Description = m.Description,
+                    PricePerDay = m.PricePerDay,
+                    Type = m.Type,
+                    Category = m.Category,
+                    WithOperator = m.WithOperator,
+                    ProviderId = m.ProviderId,
                     ProviderName = provider?.Name ?? "Unknown",
-                    ProviderEmail = provider?.Email ?? "Unknown"
+                    ProviderEmail = provider?.Email ?? "Unknown",
+                    RatingAvg = m.RatingAvg,
+                    RatingCount = m.RatingCount,
+                    CreatedAt = m.CreatedAt
                 };
-            });
+            }).ToList();
 
             return Ok(result);
         }
@@ -204,7 +214,28 @@ namespace Machly.Api.Controllers
         public async Task<IActionResult> GetBookings([FromQuery] DateTime? from, [FromQuery] DateTime? to)
         {
             var bookings = await _bookingService.GetAllAsync(from, to);
-            return Ok(bookings);
+            
+            // Necesitamos títulos de máquinas para el DTO
+            var machineIds = bookings.Select(b => b.MachineId).Distinct().ToList();
+            var machines = await _context.GetCollection<Machine>("machines")
+                .Find(m => machineIds.Contains(m.Id!))
+                .Project(m => new { m.Id, m.Title })
+                .ToListAsync();
+            var machineTitles = machines.ToDictionary(m => m.Id!, m => m.Title);
+
+            var dtos = bookings.Select(b => new AdminBookingListItem
+            {
+                Id = b.Id,
+                MachineId = b.MachineId,
+                MachineTitle = machineTitles.GetValueOrDefault(b.MachineId, "Máquina"),
+                RenterId = b.RenterId,
+                Start = b.Start,
+                End = b.End,
+                Status = b.Status,
+                TotalPrice = b.TotalPrice
+            }).ToList();
+
+            return Ok(dtos);
         }
 
         // PUT /admin/provider/verify/{id} - Validar proveedor
@@ -228,29 +259,71 @@ namespace Machly.Api.Controllers
             });
         }
 
-        // GET /admin/reports/basic - Reportes básicos
-        [HttpGet("reports/basic")]
-        public async Task<IActionResult> GetBasicReports()
+        // GET /admin/dashboard - Dashboard completo con estadísticas reales
+        [HttpGet("dashboard")]
+        public async Task<IActionResult> GetDashboardStats()
         {
             var users = await _context.GetCollection<User>("users").Find(_ => true).ToListAsync();
             var machines = await _machineService.GetAllAsync();
             var bookings = await _bookingService.GetAllAsync();
 
-            var report = new
+            // Estadísticas básicas
+            var totalUsers = users.Count;
+            var totalProviders = users.Count(u => u.Role == "PROVIDER");
+            var totalRenters = users.Count(u => u.Role == "RENTER");
+            var totalMachines = machines.Count;
+            var totalBookings = bookings.Count;
+
+            // Reservas últimos 30 días
+            var thirtyDaysAgo = DateTime.UtcNow.AddDays(-30);
+            var bookingsLast30Days = bookings.Count(b => b.CreatedAt >= thirtyDaysAgo);
+
+            // Top Categorías (basado en máquinas reservadas)
+            // 1. Obtener IDs de máquinas reservadas
+            var bookedMachineIds = bookings.Select(b => b.MachineId).ToList();
+            
+            // 2. Unir con máquinas para obtener categorías
+            var categoryStats = bookings
+                .Join(machines, b => b.MachineId, m => m.Id, (b, m) => m.Category)
+                .GroupBy(c => c)
+                .Select(g => new CategoryStat { Category = g.Key, Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .Take(5)
+                .ToList();
+
+            // Top Máquinas (más reservadas)
+            var machineStats = bookings
+                .GroupBy(b => b.MachineId)
+                .Select(g => new 
+                { 
+                    MachineId = g.Key, 
+                    Count = g.Count() 
+                })
+                .OrderByDescending(x => x.Count)
+                .Take(5)
+                .Join(machines, s => s.MachineId, m => m.Id, (s, m) => new MachineStat 
+                { 
+                    MachineTitle = m.Title, 
+                    BookingsCount = s.Count 
+                })
+                .ToList();
+
+            var dto = new AdminDashboardDto
             {
-                TotalUsers = users.Count,
-                TotalProviders = users.Count(u => u.Role == "PROVIDER"),
-                TotalRenters = users.Count(u => u.Role == "RENTER"),
-                TotalMachines = machines.Count,
-                TotalBookings = bookings.Count,
-                ActiveBookings = bookings.Count(b => b.Status == "CONFIRMED" || b.Status == "IN_PROGRESS"),
-                TotalRevenue = bookings.Sum(b => b.TotalPrice)
+                TotalUsers = totalUsers,
+                TotalProviders = totalProviders,
+                TotalRenters = totalRenters,
+                TotalMachines = totalMachines,
+                TotalBookings = totalBookings,
+                BookingsLast30Days = bookingsLast30Days,
+                TopCategories = categoryStats,
+                TopMachines = machineStats
             };
 
-            return Ok(report);
+            return Ok(dto);
         }
 
-        private static AdminUserSummaryDto MapUser(User user) => new()
+        private static ApiAdminUserSummaryDto MapUser(User user) => new()
         {
             Id = user.Id,
             Name = user.Name,
@@ -259,6 +332,39 @@ namespace Machly.Api.Controllers
             IsVerifiedProvider = user.IsVerifiedProvider,
             CreatedAt = user.CreatedAt
         };
+        // EXPORT
+        [HttpGet("export/users/csv")]
+        public async Task<IActionResult> ExportUsersCsv()
+        {
+            var users = await _userRepo.GetAllAsync();
+            var csv = new System.Text.StringBuilder();
+            csv.AppendLine("Id,Name,Email,Role,IsVerified");
+            foreach (var u in users)
+            {
+                csv.AppendLine($"{u.Id},{u.Name},{u.Email},{u.Role},{u.IsVerifiedProvider}");
+            }
+            return File(System.Text.Encoding.UTF8.GetBytes(csv.ToString()), "text/csv", "users.csv");
+        }
+
+        [HttpGet("export/machines/csv")]
+        public async Task<IActionResult> ExportMachinesCsv()
+        {
+            var machines = await _machineService.GetAllAsync();
+            var csv = new System.Text.StringBuilder();
+            csv.AppendLine("Id,Title,Type,Category,Price,ProviderId");
+            foreach (var m in machines)
+            {
+                csv.AppendLine($"{m.Id},{m.Title},{m.Type},{m.Category},{m.PricePerDay},{m.ProviderId}");
+            }
+            return File(System.Text.Encoding.UTF8.GetBytes(csv.ToString()), "text/csv", "machines.csv");
+        }
+
+        [HttpGet("logs")]
+        public async Task<IActionResult> GetLogs([FromServices] AuditService auditService, [FromQuery] DateTime? from, [FromQuery] DateTime? to, [FromQuery] string? userId, [FromQuery] string? action)
+        {
+            var logs = await auditService.GetLogsAsync(from, to, userId, action);
+            return Ok(logs);
+        }
     }
 }
 

@@ -1,0 +1,120 @@
+@model List<Machly.Web.Models.Machine>
+
+@{
+    ViewData["Title"] = "Explorar Maquinaria";
+    Layout = "_Layout";
+    var favorites = ViewData["Favorites"] as HashSet<string> ?? new HashSet<string>();
+    var currentCategory = ViewData["Category"] as string;
+    var currentType = ViewData["Type"] as string;
+    var currentMaxPrice = ViewData["MaxPrice"] as decimal?;
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Explorar Maquinaria</h2>
+        <button class="btn btn-outline-primary d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterCollapse">
+            <i class="fas fa-filter"></i> Filtros
+        </button>
+    </div>
+
+    <div class="row">
+        <!-- Filtros (Sidebar en Desktop, Collapse en Mobile) -->
+        <div class="col-md-3 mb-4">
+            <div class="collapse d-md-block" id="filterCollapse">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">Filtros</h5>
+                        <form asp-action="Explore" method="get">
+                            <div class="mb-3">
+                                <label class="form-label">Categoría</label>
+                                <input type="text" name="category" class="form-control" value="@currentCategory" placeholder="Ej. Tractor">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tipo</label>
+                                <select name="type" class="form-select">
+                                    <option value="">Todos</option>
+                                    <option value="URBANA" selected="@(currentType == "URBANA")">Urbana</option>
+                                    <option value="AGRICOLA" selected="@(currentType == "AGRICOLA")">Agrícola</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Precio Máx (Bs)</label>
+                                <input type="number" name="maxPrice" class="form-control" value="@currentMaxPrice">
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary">Aplicar</button>
+                                <a asp-action="Explore" class="btn btn-outline-secondary">Limpiar</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lista de Máquinas -->
+        <div class="col-md-9">
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info">
+                    No hay máquinas disponibles con los filtros seleccionados.
+                </div>
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    @foreach (var machine in Model)
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm machine-card">
+                                <div class="position-relative">
+                                    @if (machine.Photos != null && machine.Photos.Any())
+                                    {
+                                        <img src="@machine.Photos.First().Url" class="card-img-top" alt="@machine.Title" style="height: 200px; object-fit: cover;">
+                                    }
+                                    else
+                                    {
+                                        <div class="bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                            <i class="fas fa-tractor fa-3x text-secondary"></i>
+                                        </div>
+                                    }
+                                    
+                                    <div class="position-absolute top-0 end-0 p-2">
+                                        <form asp-controller="Renter" asp-action="ToggleFavorite" method="post">
+                                            <input type="hidden" name="machineId" value="@machine.Id" />
+                                            <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                                            <button type="submit" class="btn btn-light rounded-circle shadow-sm p-2" title="@(favorites.Contains(machine.Id) ? "Quitar de favoritos" : "Agregar a favoritos")">
+                                                <i class="@(favorites.Contains(machine.Id) ? "fas text-danger" : "far text-secondary") fa-heart fa-lg"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    @if (machine.IsOutOfService)
+                                    {
+                                        <div class="position-absolute top-0 start-0 p-2">
+                                            <span class="badge bg-danger">FUERA DE SERVICIO</span>
+                                        </div>
+                                    }
+                                </div>
+                                
+                                <div class="card-body">
+                                    <h5 class="card-title text-truncate">@machine.Title</h5>
+                                    <p class="card-text text-muted small">@machine.Category</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <span class="h5 mb-0 text-primary">Bs. @machine.PricePerDay<small class="text-muted fs-6">/día</small></span>
+                                        @if (machine.WithOperator)
+                                        {
+                                            <span class="badge bg-info text-dark"><i class="fas fa-user-hard-hat me-1"></i>Con Op.</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-white border-top-0">
+                                    <a asp-action="Details" asp-route-id="@machine.Id" class="btn btn-primary w-100">Ver Detalles</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

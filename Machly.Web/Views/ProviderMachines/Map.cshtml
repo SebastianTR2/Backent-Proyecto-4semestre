@@ -1,0 +1,48 @@
+@{
+    ViewData["Title"] = "Mapa de Mis Máquinas";
+}
+
+<div class="container-fluid p-0">
+    <div id="map" style="height: calc(100vh - 56px); width: 100%;"></div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+@section Scripts {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var map = L.map('map').setView([-16.5000, -68.1500], 6);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Cargar máquinas del proveedor
+            fetch('/ProviderMachines/GetMyMachinesGeo')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        var bounds = L.latLngBounds();
+                        data.forEach(machine => {
+                            if (machine.lat && machine.lng) {
+                                var marker = L.marker([machine.lat, machine.lng]).addTo(map);
+                                bounds.extend([machine.lat, machine.lng]);
+                                
+                                var popupContent = `
+                                    <div class="p-2">
+                                        <h6>${machine.title}</h6>
+                                        <p class="mb-1 text-muted">${machine.type}</p>
+                                        <a href="/ProviderMachines/Calendar/${machine.id}" class="btn btn-sm btn-info text-white w-100 mt-1">Ver Calendario</a>
+                                    </div>
+                                `;
+                                marker.bindPopup(popupContent);
+                            }
+                        });
+                        map.fitBounds(bounds);
+                    }
+                });
+        });
+    </script>
+}

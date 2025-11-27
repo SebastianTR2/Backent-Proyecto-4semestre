@@ -29,16 +29,24 @@ builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<MachineService>();
 builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<INotificationSender, MockNotificationSender>();
 
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<MachineRepository>();
 builder.Services.AddScoped<BookingRepository>();
 builder.Services.AddScoped<NotificationRepository>();
+builder.Services.AddScoped<FavoriteRepository>();
+builder.Services.AddScoped<SupportTicketRepository>();
+builder.Services.AddScoped<ChatRepository>();
+builder.Services.AddScoped<AuditRepository>();
+
+builder.Services.AddScoped<AuditService>();
 
 // ------------------------------------------------------
-// 4. CONTROLLERS
+// 4. CONTROLLERS & SIGNALR
 // ------------------------------------------------------
 builder.Services.AddControllers();
+builder.Services.AddSignalR();
 
 // ------------------------------------------------------
 // 5. SWAGGER
@@ -86,7 +94,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowAll", policy =>
         policy.AllowAnyOrigin()
               .AllowAnyMethod()
-              .AllowAnyHeader());
+              .AllowAnyHeader()
+              .WithOrigins("http://localhost:5000", "https://localhost:5001") // Ajustar según cliente
+              .AllowCredentials()); // Necesario para SignalR
 });
 
 // ------------------------------------------------------
@@ -113,10 +123,35 @@ builder.Services.AddAuthentication(opt =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
     };
+
+    // Configuración para SignalR (token en query string)
+    opt.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chatHub"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
 
-builder.Services.AddAuthorization();
-
+// ------------------------------------------------------
+// 8. GRAPHQL
+// ------------------------------------------------------
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Machly.Api.GraphQL.Queries.Query>()
+    .AddMutationType<Machly.Api.GraphQL.Mutations.Mutation>()
+    .AddType<Machly.Api.GraphQL.Types.MachineType>()
+    .AddType<Machly.Api.GraphQL.Types.BookingType>()
+    .AddType<Machly.Api.GraphQL.Types.UserType>()
+    .AddAuthorization()
+    .ModifyRequestOptions(o => o.IncludeExceptionDetails = true);
 
 // ======================================================
 //                BUILD APP
@@ -126,7 +161,7 @@ var app = builder.Build();
 
 app.UseCors("AllowAll");
 
-// Swagger solo para development (pero t� lo quieres siempre visible)
+// Swagger solo para development (pero t lo quieres siempre visible)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -138,6 +173,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGraphQL("/graphql");
+app.MapHub<Machly.Api.Hubs.ChatHub>("/chatHub");
 
 
 // ======================================================

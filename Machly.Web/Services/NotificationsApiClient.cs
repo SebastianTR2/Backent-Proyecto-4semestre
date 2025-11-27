@@ -24,6 +24,12 @@ namespace Machly.Web.Services
             var response = await _httpClient.PutAsync($"/notifications/{notificationId}/read", null);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<bool> SendNotificationAsync(NotificationRequest request)
+        {
+            var response = await _httpClient.PostAsJsonAsync("/notifications/send", request);
+            return response.IsSuccessStatusCode;
+        }
     }
 }
 

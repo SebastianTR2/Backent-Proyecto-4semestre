@@ -14,6 +14,9 @@ namespace Machly.Web.Models.Admin
         public string ProviderId { get; set; } = string.Empty;
         public string ProviderName { get; set; } = string.Empty;
         public string ProviderEmail { get; set; } = string.Empty;
+        public double RatingAvg { get; set; }
+        public int RatingCount { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
 

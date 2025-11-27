@@ -1,0 +1,122 @@
+@{
+    ViewData["Title"] = "Búsqueda Avanzada";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Filtros Laterales -->
+        <div class="col-md-3">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Filtros</h5>
+                </div>
+                <div class="card-body">
+                    <form id="searchForm">
+                        <div class="mb-3">
+                            <label class="form-label">Tipo</label>
+                            <select class="form-select" name="type" id="type">
+                                <option value="">Todos</option>
+                                <option value="URBANA">Urbana</option>
+                                <option value="AGRICOLA">Agrícola</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Categoría</label>
+                            <input type="text" class="form-control" name="category" id="category" placeholder="Ej. Tractor, Grúa">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Precio Máximo (Bs.)</label>
+                            <input type="range" class="form-range" min="0" max="5000" step="50" id="priceRange" oninput="priceOutput.value = priceRange.value">
+                            <output id="priceOutput">2500</output>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Distancia (km)</label>
+                            <input type="range" class="form-range" min="1" max="100" step="1" id="radiusRange" value="50" oninput="radiusOutput.value = radiusRange.value">
+                            <output id="radiusOutput">50</output>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="withOperator">
+                            <label class="form-check-label" for="withOperator">Con Operador</label>
+                        </div>
+
+                        <button type="button" class="btn btn-primary w-100" onclick="searchMachines()">Buscar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resultados -->
+        <div class="col-md-9">
+            <div id="resultsArea" class="row g-3">
+                <!-- Resultados cargados vía JS -->
+                <div class="col-12 text-center text-muted py-5">
+                    <i class="fas fa-search fa-3x mb-3"></i>
+                    <p>Usa los filtros para encontrar maquinaria.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function searchMachines() {
+            var type = document.getElementById('type').value;
+            var category = document.getElementById('category').value;
+            var maxPrice = document.getElementById('priceRange').value;
+            var radius = document.getElementById('radiusRange').value;
+            var withOperator = document.getElementById('withOperator').checked;
+
+            // Obtener ubicación actual para el filtro de distancia
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    executeSearch(lat, lng, radius, type, category, maxPrice, withOperator);
+                }, function () {
+                    // Si no hay ubicación, buscar sin geo-filtro
+                    executeSearch(null, null, null, type, category, maxPrice, withOperator);
+                });
+            } else {
+                executeSearch(null, null, null, type, category, maxPrice, withOperator);
+            }
+        }
+
+        function executeSearch(lat, lng, radius, type, category, maxPrice, withOperator) {
+            var url = `/Renter/GetNearMachines?maxPrice=${maxPrice}&type=${type}&category=${category}&withOperator=${withOperator}`;
+            if (lat && lng) {
+                url += `&lat=${lat}&lng=${lng}&radiusKm=${radius}`;
+            }
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    var html = '';
+                    if (data.length === 0) {
+                        html = '<div class="col-12 text-center text-muted py-5"><p>No se encontraron resultados.</p></div>';
+                    } else {
+                        data.forEach(m => {
+                            html += `
+                                <div class="col-md-4">
+                                    <div class="card h-100 shadow-sm">
+                                        <img src="${m.photos && m.photos.length > 0 ? m.photos[0].url : '/img/placeholder.jpg'}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${m.title}</h5>
+                                            <p class="card-text text-muted small">${m.type} - ${m.category}</p>
+                                            <p class="fw-bold text-primary">Bs. ${m.pricePerDay}/día</p>
+                                            <a href="/Renter/Details/${m.id}" class="btn btn-outline-primary w-100">Ver Detalles</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    }
+                    document.getElementById('resultsArea').innerHTML = html;
+                });
+        }
+    </script>
+}

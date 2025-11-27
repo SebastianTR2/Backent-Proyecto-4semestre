@@ -11,7 +11,6 @@ namespace Machly.Api.Repositories
         public MachineRepository(MongoDbContext context)
         {
             _machines = context.GetCollection<Machine>("machines");
-            // Crear índices si no existen
             CreateIndexes();
         }
 
@@ -19,11 +18,17 @@ namespace Machly.Api.Repositories
         {
             try
             {
+                var indexKeys = Builders<Machine>.IndexKeys;
+                
                 // Índice en ProviderId
-                var providerIndex = Builders<Machine>.IndexKeys.Ascending(m => m.ProviderId);
-                _machines.Indexes.CreateOne(new CreateIndexModel<Machine>(providerIndex));
+                var providerIndex = new CreateIndexModel<Machine>(indexKeys.Ascending(m => m.ProviderId));
+                _machines.Indexes.CreateOne(providerIndex);
+
+                // Índice Geoespacial 2dsphere
+                var geoIndex = new CreateIndexModel<Machine>(indexKeys.Geo2DSphere(m => m.GeoLocation));
+                _machines.Indexes.CreateOne(geoIndex);
             }
-            catch { } // Ignorar si ya existen
+            catch { } 
         }
 
         public async Task<List<Machine>> GetAllAsync() =>
@@ -34,6 +39,15 @@ namespace Machly.Api.Repositories
             var objectId = ObjectId.Parse(id);
             var filter = Builders<Machine>.Filter.Eq("_id", objectId);
             return await _machines.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Machine>> GetByIdsAsync(List<string> ids)
+        {
+            if (ids == null || !ids.Any()) return new List<Machine>();
+            
+            var objectIds = ids.Select(id => ObjectId.Parse(id)).ToList();
+            var filter = Builders<Machine>.Filter.In("_id", objectIds);
+            return await _machines.Find(filter).ToListAsync();
         }
 
         public async Task<List<Machine>> GetByProviderAsync(string providerId) =>
@@ -50,79 +64,51 @@ namespace Machly.Api.Repositories
             bool? withOperator = null,
             string? providerId = null)
         {
+            var builder = Builders<Machine>.Filter;
             var filters = new List<FilterDefinition<Machine>>();
 
-            // Filtro por precio
-            if (minPrice.HasValue || maxPrice.HasValue)
-            {
-                if (minPrice.HasValue)
-                {
-                    filters.Add(Builders<Machine>.Filter.Gte(m => m.PricePerDay, minPrice.Value));
-                }
-                if (maxPrice.HasValue)
-                {
-                    filters.Add(Builders<Machine>.Filter.Lte(m => m.PricePerDay, maxPrice.Value));
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(type))
-            {
-                filters.Add(Builders<Machine>.Filter.Eq(m => m.Type, type));
-            }
-
-            if (!string.IsNullOrWhiteSpace(category))
-            {
-                filters.Add(Builders<Machine>.Filter.Eq(m => m.Category, category));
-            }
-
-            if (withOperator.HasValue)
-            {
-                filters.Add(Builders<Machine>.Filter.Eq(m => m.WithOperator, withOperator.Value));
-            }
-
-            if (!string.IsNullOrWhiteSpace(providerId))
-            {
-                filters.Add(Builders<Machine>.Filter.Eq(m => m.ProviderId, providerId));
-            }
-
-            var finalFilter = filters.Count > 0
-                ? Builders<Machine>.Filter.And(filters)
-                : Builders<Machine>.Filter.Empty;
-
-            var machines = await _machines.Find(finalFilter).ToListAsync();
-
-            // Filtro geoespacial simple (en memoria) si se proporciona
+            // Filtro Geoespacial ($near)
             if (lat.HasValue && lng.HasValue && radiusKm.HasValue)
             {
-                machines = machines.Where(m =>
-                {
-                    var distance = CalculateDistance(lat.Value, lng.Value, m.Lat, m.Lng);
-                    return distance <= radiusKm.Value;
-                }).ToList();
+                var point = new MongoDB.Driver.GeoJsonObjectModel.GeoJsonPoint<MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates>(
+                    new MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates(lng.Value, lat.Value));
+                
+                // $near espera metros, radiusKm * 1000
+                filters.Add(builder.Near(m => m.GeoLocation, point, radiusKm.Value * 1000));
             }
 
-            return machines;
+            if (minPrice.HasValue) filters.Add(builder.Gte(m => m.PricePerDay, minPrice.Value));
+            if (maxPrice.HasValue) filters.Add(builder.Lte(m => m.PricePerDay, maxPrice.Value));
+            if (!string.IsNullOrWhiteSpace(type)) filters.Add(builder.Eq(m => m.Type, type));
+            if (!string.IsNullOrWhiteSpace(category)) filters.Add(builder.Eq(m => m.Category, category));
+            if (withOperator.HasValue) filters.Add(builder.Eq(m => m.WithOperator, withOperator.Value));
+            if (!string.IsNullOrWhiteSpace(providerId)) filters.Add(builder.Eq(m => m.ProviderId, providerId));
+
+            var finalFilter = filters.Count > 0 ? builder.And(filters) : builder.Empty;
+
+            return await _machines.Find(finalFilter).ToListAsync();
         }
 
-        private double CalculateDistance(double lat1, double lon1, double lat2, double lon2)
+        public async Task CreateAsync(Machine machine)
         {
-            const double R = 6371; // Radio de la Tierra en km
-            var dLat = ToRadians(lat2 - lat1);
-            var dLon = ToRadians(lon2 - lon1);
-            var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
-                    Math.Cos(ToRadians(lat1)) * Math.Cos(ToRadians(lat2)) *
-                    Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
-            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
-            return R * c;
-        }
-
-        private double ToRadians(double degrees) => degrees * Math.PI / 180;
-
-        public async Task CreateAsync(Machine machine) =>
+            // Sincronizar GeoLocation
+            if (machine.Lat != 0 && machine.Lng != 0)
+            {
+                machine.GeoLocation = new MongoDB.Driver.GeoJsonObjectModel.GeoJsonPoint<MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates>(
+                    new MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates(machine.Lng, machine.Lat));
+            }
             await _machines.InsertOneAsync(machine);
+        }
 
         public async Task<bool> UpdateAsync(string id, Machine machine)
         {
+            // Sincronizar GeoLocation
+            if (machine.Lat != 0 && machine.Lng != 0)
+            {
+                machine.GeoLocation = new MongoDB.Driver.GeoJsonObjectModel.GeoJsonPoint<MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates>(
+                    new MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates(machine.Lng, machine.Lat));
+            }
+
             var objectId = ObjectId.Parse(id);
             var filter = Builders<Machine>.Filter.Eq("_id", objectId);
             var result = await _machines.ReplaceOneAsync(filter, machine);

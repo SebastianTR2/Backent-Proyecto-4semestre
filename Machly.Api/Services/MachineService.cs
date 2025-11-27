@@ -28,7 +28,22 @@ namespace Machly.Api.Services
             string? providerId = null) =>
             _repo.GetFilteredAsync(lat, lng, radiusKm, minPrice, maxPrice, type, category, withOperator, providerId);
 
-        public Task CreateAsync(Machine machine) => _repo.CreateAsync(machine);
+        public Task CreateAsync(Machine machine)
+        {
+            // Ensure Location and GeoLocation are populated
+            if (machine.Location == null && (machine.Lat != 0 || machine.Lng != 0))
+            {
+                machine.Location = new LocationPoint { Lat = machine.Lat, Lng = machine.Lng };
+            }
+
+            if (machine.GeoLocation == null && (machine.Lat != 0 || machine.Lng != 0))
+            {
+                machine.GeoLocation = new MongoDB.Driver.GeoJsonObjectModel.GeoJsonPoint<MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates>(
+                    new MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates(machine.Lng, machine.Lat));
+            }
+
+            return _repo.CreateAsync(machine);
+        }
         public Task<bool> UpdateAsync(string id, Machine machine) => _repo.UpdateAsync(id, machine);
         public Task<bool> DeleteAsync(string id) => _repo.DeleteAsync(id);
     }

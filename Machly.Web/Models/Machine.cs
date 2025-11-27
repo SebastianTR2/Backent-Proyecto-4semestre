@@ -11,27 +11,19 @@ namespace Machly.Web.Models
         public string Title { get; set; } = "";
         public string Description { get; set; } = "";
 
-        // "URBANA" | "AGRICOLA"
         public string Type { get; set; } = "";
-
         public string Category { get; set; } = "";
-
         public decimal PricePerDay { get; set; }
         public bool WithOperator { get; set; }
-
+        public List<MachinePhoto> Photos { get; set; } = new();
         public double Lat { get; set; }
         public double Lng { get; set; }
 
         public TariffAgro? TariffsAgro { get; set; }
-
-        public List<MachinePhoto>? Photos { get; set; } = new();
-
+        public bool IsOutOfService { get; set; }
         public double RatingAvg { get; set; }
         public int RatingCount { get; set; }
-
-        // Auditoría
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
     }
 
     public class MachinePhoto
@@ -45,7 +37,7 @@ namespace Machly.Web.Models
         public decimal? Hectarea { get; set; }
         public decimal? Tonelada { get; set; }
 
-        public List<KmTariff>? KmTariffs { get; set; }
+        public List<KmTariff>? KmTariffs { get; set; } = new();
     }
 
     public class KmTariff

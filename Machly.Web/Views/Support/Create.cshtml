@@ -1,0 +1,54 @@
+@model Machly.Web.Models.CreateTicketViewModel
+
+@{
+    ViewData["Title"] = "Nuevo Ticket de Soporte";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Crear Ticket de Soporte</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Subject" class="form-label">Asunto</label>
+                            <input asp-for="Subject" class="form-control" placeholder="Ej: Problema con reserva #123" />
+                            <span asp-validation-for="Subject" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Priority" class="form-label">Prioridad</label>
+                            <select asp-for="Priority" class="form-select">
+                                <option value="LOW">Baja</option>
+                                <option value="MEDIUM" selected>Media</option>
+                                <option value="HIGH">Alta</option>
+                            </select>
+                            <span asp-validation-for="Priority" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Message" class="form-label">Mensaje</label>
+                            <textarea asp-for="Message" class="form-control" rows="5" placeholder="Describa su problema en detalle..."></textarea>
+                            <span asp-validation-for="Message" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Enviar Ticket</button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

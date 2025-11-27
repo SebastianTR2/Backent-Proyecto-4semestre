@@ -7,7 +7,7 @@ namespace Machly.Api.DTOs
     public class AdminMachineDetailsDto
     {
         public Machine Machine { get; set; } = null!;
-        public AdminUserSummaryDto? Provider { get; set; }
+        public ApiAdminUserSummaryDto? Provider { get; set; }
         public List<AdminBookingReviewDto> Reviews { get; set; } = new();
     }
 

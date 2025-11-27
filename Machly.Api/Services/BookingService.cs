@@ -10,12 +10,14 @@ namespace Machly.Api.Services
         private readonly BookingRepository _bookingRepo;
         private readonly MachineRepository _machineRepo;
         private readonly MongoDbContext _context;
+        private readonly INotificationSender _notificationSender;
 
-        public BookingService(BookingRepository bookingRepo, MachineRepository machineRepo, MongoDbContext context)
+        public BookingService(BookingRepository bookingRepo, MachineRepository machineRepo, MongoDbContext context, INotificationSender notificationSender)
         {
             _bookingRepo = bookingRepo;
             _machineRepo = machineRepo;
             _context = context;
+            _notificationSender = notificationSender;
         }
 
         public async Task<Booking?> CreateAsync(BookingCreateRequest request)
@@ -50,19 +52,56 @@ namespace Machly.Api.Services
             };
 
             await _bookingRepo.CreateAsync(booking);
+
+            // Enviar notificación mock
+            await _notificationSender.SendEmailAsync("provider@example.com", "Nueva Reserva", $"Has recibido una nueva reserva para {machine.Title}");
+            await _notificationSender.SendWhatsAppAsync("+59100000000", $"Nueva reserva confirmada: {booking.Id}");
+
             return booking;
         }
 
-        public Task<List<Booking>> GetByUserAsync(string renterId, DateTime? from = null, DateTime? to = null) =>
-            _bookingRepo.GetByUserAsync(renterId, from, to);
+        public async Task<List<BookingDetailDto>> GetByUserAsync(string renterId, DateTime? from = null, DateTime? to = null)
+        {
+            var bookings = await _bookingRepo.GetByUserAsync(renterId, from, to);
+            if (!bookings.Any()) return new List<BookingDetailDto>();
+
+            var machineIds = bookings.Select(b => b.MachineId).Distinct().ToList();
+            var machines = await _machineRepo.GetByIdsAsync(machineIds); // Need to ensure this method exists or use Find
+            var machineDict = machines.ToDictionary(m => m.Id!);
+
+            var result = new List<BookingDetailDto>();
+            foreach (var b in bookings)
+            {
+                var machine = machineDict.GetValueOrDefault(b.MachineId);
+                result.Add(new BookingDetailDto
+                {
+                    Id = b.Id!,
+                    MachineId = b.MachineId,
+                    MachineTitle = machine?.Title ?? "Máquina desconocida",
+                    MachinePhotoUrl = machine?.Photos?.FirstOrDefault()?.Url,
+                    
+                    RenterId = b.RenterId,
+                    RenterName = "Yo", // Since it's get by user
+                    
+                    Start = b.Start,
+                    End = b.End,
+                    TotalPrice = b.TotalPrice,
+                    Status = b.Status,
+                    CheckInDate = b.CheckInDate,
+                    CheckOutDate = b.CheckOutDate
+                });
+            }
+            return result;
+        }
 
         public Task<List<Booking>> GetByMachineAsync(string machineId, DateTime? from = null, DateTime? to = null) =>
             _bookingRepo.GetByMachineAsync(machineId, from, to);
 
-        public async Task<List<Booking>> GetByProviderAsync(string providerId, DateTime? from = null, DateTime? to = null)
+        public async Task<List<BookingDetailDto>> GetByProviderAsync(string providerId, DateTime? from = null, DateTime? to = null)
         {
             var machinesCollection = _context.GetCollection<Machine>("machines");
-            return await _bookingRepo.GetByProviderAsync(providerId, machinesCollection, from, to);
+            var usersCollection = _context.GetCollection<User>("users");
+            return await _bookingRepo.GetByProviderAsync(providerId, machinesCollection, usersCollection, from, to);
         }
 
         public Task<Booking?> GetByIdAsync(string id) =>

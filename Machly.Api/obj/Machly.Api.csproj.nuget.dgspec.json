@@ -55,6 +55,18 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
+            "HotChocolate.AspNetCore": {
+              "target": "Package",
+              "version": "[15.1.11, )"
+            },
+            "HotChocolate.AspNetCore.Authorization": {
+              "target": "Package",
+              "version": "[15.1.11, )"
+            },
+            "HotChocolate.Data": {
+              "target": "Package",
+              "version": "[15.1.11, )"
+            },
             "Microsoft.AspNetCore.Authentication.JwtBearer": {
               "target": "Package",
               "version": "[8.0.0, )"

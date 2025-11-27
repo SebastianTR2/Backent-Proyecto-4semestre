@@ -1,5 +1,6 @@
 ﻿using Machly.Api.Models;
 using MongoDB.Driver;
+using Machly.Api.DTOs;
 using MongoDB.Bson;
 
 namespace Machly.Api.Repositories
@@ -36,6 +37,10 @@ namespace Machly.Api.Repositories
                 // Índice en Status
                 var statusIndex = Builders<Booking>.IndexKeys.Ascending(b => b.Status);
                 _bookings.Indexes.CreateOne(new CreateIndexModel<Booking>(statusIndex));
+
+                // Índice en Start (para ordenamiento global)
+                var startIndex = Builders<Booking>.IndexKeys.Descending(b => b.Start);
+                _bookings.Indexes.CreateOne(new CreateIndexModel<Booking>(startIndex));
             }
             catch { } // Ignorar si ya existen
         }
@@ -61,23 +66,66 @@ namespace Machly.Api.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<Booking>> GetByProviderAsync(
+        public async Task<List<BookingDetailDto>> GetByProviderAsync(
             string providerId,
             IMongoCollection<Machine> machinesCollection,
+            IMongoCollection<User> usersCollection,
             DateTime? from = null,
             DateTime? to = null)
         {
-            // Obtener IDs de máquinas del proveedor
-            var machineIds = await machinesCollection
+            // 1. Obtener IDs de máquinas del proveedor
+            var machines = await machinesCollection
                 .Find(m => m.ProviderId == providerId)
-                .Project(m => m.Id)
                 .ToListAsync();
+            
+            var machineIds = machines.Select(m => m.Id).ToList();
+            var machineDict = machines.ToDictionary(m => m.Id!);
 
+            // 2. Obtener reservas
             var filter = Builders<Booking>.Filter.In(b => b.MachineId, machineIds);
             filter = ApplyDateRange(filter, from, to);
-            return await _bookings.Find(filter)
+            var bookings = await _bookings.Find(filter)
                 .SortByDescending(b => b.Start)
                 .ToListAsync();
+
+            if (!bookings.Any())
+                return new List<BookingDetailDto>();
+
+            // 3. Obtener Renters
+            var renterIds = bookings.Select(b => b.RenterId).Distinct().ToList();
+            var renters = await usersCollection
+                .Find(u => renterIds.Contains(u.Id!))
+                .ToListAsync();
+            var renterDict = renters.ToDictionary(u => u.Id!);
+
+            // 4. Mapear a DTO
+            var result = new List<BookingDetailDto>();
+            foreach (var b in bookings)
+            {
+                var machine = machineDict.GetValueOrDefault(b.MachineId);
+                var renter = renterDict.GetValueOrDefault(b.RenterId);
+
+                result.Add(new BookingDetailDto
+                {
+                    Id = b.Id!,
+                    MachineId = b.MachineId,
+                    MachineTitle = machine?.Title ?? "Máquina desconocida",
+                    MachinePhotoUrl = machine?.Photos?.FirstOrDefault()?.Url,
+                    
+                    RenterId = b.RenterId,
+                    RenterName = renter?.Name ?? "Usuario desconocido",
+                    RenterEmail = renter?.Email,
+                    
+                    Start = b.Start,
+                    End = b.End,
+                    TotalPrice = b.TotalPrice,
+                    Status = b.Status,
+                    CheckInDate = b.CheckInDate,
+                    CheckOutDate = b.CheckOutDate
+                });
+            }
+
+            return result;
         }
 
         public async Task<Booking?> GetByIdAsync(string id)

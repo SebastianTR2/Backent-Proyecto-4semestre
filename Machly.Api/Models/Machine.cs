@@ -9,7 +9,6 @@ namespace Machly.Api.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string? Id { get; set; }
 
-        // Relación con el proveedor (User con Role = PROVIDER)
         [BsonRepresentation(BsonType.ObjectId)]
         public string ProviderId { get; set; } = null!;
 
@@ -19,11 +18,9 @@ namespace Machly.Api.Models
         public string Type { get; set; } = "URBANA";
         public string Category { get; set; } = "GENERAL";
 
-        // Precio base por día (modo estándar)
         public decimal PricePerDay { get; set; }
         public bool WithOperator { get; set; }
 
-        // Geolocalización SIMPLE (como acordamos)
         [BsonElement("Lat")]
         public double Lat { get; set; }
 
@@ -31,17 +28,18 @@ namespace Machly.Api.Models
         public double Lng { get; set; }
         public LocationPoint? Location { get; set; }
 
+        [BsonIgnoreIfNull]
+        public MongoDB.Driver.GeoJsonObjectModel.GeoJsonPoint<MongoDB.Driver.GeoJsonObjectModel.GeoJson2DGeographicCoordinates>? GeoLocation { get; set; }
+
         public List<MachinePhoto> Photos { get; set; } = new();
         public TariffAgro? TariffsAgro { get; set; }
+        
+        public List<DateRange> Calendar { get; set; } = new();
+        public bool IsOutOfService { get; set; } = false;
 
-        // Calendario de bloques ocupados (sprint futuro)
-        public List<MachineCalendarSlot> Calendar { get; set; } = new();
-
-        // Ratings
         public double RatingAvg { get; set; }
         public int RatingCount { get; set; }
 
-        // Auditoría básica
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
@@ -58,10 +56,11 @@ namespace Machly.Api.Models
         public bool IsCover { get; set; }
     }
 
-    public class MachineCalendarSlot
+    public class DateRange
     {
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public string Type { get; set; } = "BLOCKED"; // BLOCKED, MAINTENANCE
     }
 
     public class TariffAgro

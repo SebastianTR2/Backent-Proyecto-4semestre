@@ -19,8 +19,8 @@ namespace Machly.Web.Controllers
 
         public async Task<IActionResult> Dashboard()
         {
-            var reports = await _adminApiClient.GetBasicReportsAsync();
-            return View(reports);
+            var stats = await _adminApiClient.GetDashboardStatsAsync();
+            return View(stats);
         }
 
         public async Task<IActionResult> Users()
@@ -89,6 +89,105 @@ namespace Machly.Web.Controllers
                 return RedirectToAction(nameof(Machines));
 
             return BadRequest();
+        }
+
+        // NOTIFICATIONS
+        public IActionResult NotificationsCreate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NotificationsCreate([FromServices] NotificationsApiClient notificationsApi, NotificationRequest model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var success = await notificationsApi.SendNotificationAsync(model);
+            if (success)
+            {
+                TempData["Success"] = "Notificación enviada correctamente.";
+                return RedirectToAction(nameof(NotificationsCreate));
+            }
+
+            ModelState.AddModelError("", "Error al enviar la notificación.");
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult MachineMap()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllMachinesGeo()
+        {
+            var machines = await _adminApiClient.GetMachinesAsync(null, null, null);
+            return Ok(machines);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ExportUsers()
+        {
+            // Proxy a la API
+            // Asumimos que _adminApiClient tiene el HttpClient configurado
+            // Pero AdminApiClient usa métodos tipados.
+            // Podemos usar un HttpClient nuevo o inyectar IHttpClientFactory
+            // Para simplificar, usaremos el mismo patrón que ChatController si es necesario, 
+            // o mejor, extender AdminApiClient.
+            // Vamos a extender AdminApiClient.
+            var fileBytes = await _adminApiClient.GetUsersCsvAsync();
+            return File(fileBytes, "text/csv", "users.csv");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExportMachines()
+        {
+            var fileBytes = await _adminApiClient.GetMachinesCsvAsync();
+            return File(fileBytes, "text/csv", "machines.csv");
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logs(DateTime? from, DateTime? to, string? userId, string? action)
+        {
+            var logs = await _adminApiClient.GetLogsAsync(from, to, userId, action);
+            return View(logs);
+        }
+        [HttpGet]
+        public IActionResult MachineImport()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ImportMachines(IFormFile file)
+        {
+            if (file == null) return View("MachineImport");
+
+            // Enviar a API
+            // Necesitamos usar HttpClient con MultipartFormDataContent
+            // AdminApiClient no tiene soporte para esto, lo hacemos manual aquí o extendemos.
+            // Haremos manual para rápido.
+            
+            using var content = new MultipartFormDataContent();
+            using var stream = file.OpenReadStream();
+            content.Add(new StreamContent(stream), "file", file.FileName);
+
+            // Asumimos que _adminApiClient tiene el HttpClient expuesto o creamos uno nuevo con el token
+            // Como _adminApiClient es un servicio tipado, no expone el cliente fácilmente a menos que sea public.
+            // Usaremos IHttpClientFactory inyectado en el método si es posible, o creamos uno.
+            // Pero necesitamos el token.
+            // Mejor extender AdminApiClient.
+            
+            var success = await _adminApiClient.ImportMachinesAsync(file);
+            if (success)
+            {
+                TempData["Success"] = "Importación completada.";
+            }
+            else
+            {
+                TempData["Error"] = "Error en la importación.";
+            }
+
+            return View("MachineImport");
         }
     }
 }

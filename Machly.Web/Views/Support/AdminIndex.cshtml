@@ -1,0 +1,86 @@
+@model List<Machly.Web.Models.SupportTicket>
+
+@{
+    ViewData["Title"] = "Administración de Soporte";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4">Tickets de Soporte (Admin)</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Usuario</th>
+                    <th>Asunto</th>
+                    <th>Prioridad</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var ticket in Model)
+                {
+                    <tr>
+                        <td>@ticket.CreatedAt.ToLocalTime().ToString("g")</td>
+                        <td>@ticket.UserId</td> <!-- Idealmente mostrar nombre -->
+                        <td>@ticket.Subject</td>
+                        <td>
+                            <span class="badge @(ticket.Priority == "HIGH" ? "bg-danger" : (ticket.Priority == "MEDIUM" ? "bg-warning text-dark" : "bg-info text-dark"))">
+                                @ticket.Priority
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge @(ticket.Status == "OPEN" ? "bg-primary" : (ticket.Status == "RESOLVED" ? "bg-success" : "bg-secondary"))">
+                                @ticket.Status
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#resolveModal-@ticket.Id">
+                                Ver / Resolver
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="resolveModal-@ticket.Id" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Ticket: @ticket.Subject</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p><strong>Mensaje:</strong></p>
+                                            <p>@ticket.Message</p>
+                                            
+                                            <hr />
+                                            
+                                            @if (ticket.Status == "RESOLVED")
+                                            {
+                                                <div class="alert alert-success">
+                                                    <strong>Respuesta:</strong> @ticket.AdminResponse
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <form asp-action="Resolve" method="post">
+                                                    <input type="hidden" name="id" value="@ticket.Id" />
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Respuesta</label>
+                                                        <textarea name="response" class="form-control" rows="4" required></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn btn-success w-100">Enviar Respuesta y Resolver</button>
+                                                </form>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
