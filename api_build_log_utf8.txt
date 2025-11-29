@@ -1,0 +1,15 @@
+﻿  Determinando los proyectos que se van a restaurar...
+  Todos los proyectos est??n actualizados para la restauraci??n.
+C:\Users\PC\Downloads\Machly\Machly.Api\Controllers\SettingsController.cs(42,60): error CS0246: El nombre del tipo o del espacio de nombres 'GlobalSettings' no se encontr?? (??falta una directiva using o una referencia de ensamblado?) [C:\Users\PC\Downloads\Machly\Machly.Api\Machly.Api.csproj]
+C:\Users\PC\Downloads\Machly\Machly.Api\Controllers\SettingsController.cs(15,43): error CS0246: El nombre del tipo o del espacio de nombres 'GlobalSettings' no se encontr?? (??falta una directiva using o una referencia de ensamblado?) [C:\Users\PC\Downloads\Machly\Machly.Api\Machly.Api.csproj]
+
+ERROR al compilar.
+
+C:\Users\PC\Downloads\Machly\Machly.Api\Controllers\SettingsController.cs(42,60): error CS0246: El nombre del tipo o del espacio de nombres 'GlobalSettings' no se encontr?? (??falta una directiva using o una referencia de ensamblado?) [C:\Users\PC\Downloads\Machly\Machly.Api\Machly.Api.csproj]
+C:\Users\PC\Downloads\Machly\Machly.Api\Controllers\SettingsController.cs(15,43): error CS0246: El nombre del tipo o del espacio de nombres 'GlobalSettings' no se encontr?? (??falta una directiva using o una referencia de ensamblado?) [C:\Users\PC\Downloads\Machly\Machly.Api\Machly.Api.csproj]
+    0 Advertencia(s)
+    2 Errores
+
+Tiempo transcurrido 00:00:01.23
+
+Hay actualizaciones de carga de trabajo disponibles. Ejecute "dotnet workload list" para obtener m??s informaci??n.

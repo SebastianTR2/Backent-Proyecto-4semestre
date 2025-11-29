@@ -1,0 +1,52 @@
+@model List<Machly.Web.Models.CalendarEventDto>
+
+@{
+    ViewData["Title"] = "Calendario de Disponibilidad";
+    Layout = "_Layout";
+    var machineTitle = ViewData["MachineTitle"] as string;
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Calendario: @machineTitle</h2>
+        <a asp-action="Index" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Volver
+        </a>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var events = @Html.Raw(Json.Serialize(Model.Select(e => new {
+                title = e.Title,
+                start = e.Start,
+                end = e.End,
+                color = e.Type == "BOOKING" ? "#4e73df" : (e.Type == "MAINTENANCE" ? "#f6c23e" : "#e74a3b")
+            })));
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'es',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: events,
+                eventClick: function(info) {
+                    alert('Evento: ' + info.event.title + '\nInicio: ' + info.event.start.toLocaleString());
+                }
+            });
+            calendar.render();
+        });
+    </script>
+}

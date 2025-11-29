@@ -1,0 +1,25 @@
+@model Machly.Web.Models.Booking
+
+@{
+    ViewData["Title"] = "Editar Reserva";
+}
+
+<h2>Editar Reserva</h2>
+
+<form asp-action="BookingEdit" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <label asp-for="Start" class="control-label"></label>
+        <input asp-for="Start" class="form-control" type="datetime-local" />
+    </div>
+    <div class="form-group">
+        <label asp-for="End" class="control-label"></label>
+        <input asp-for="End" class="form-control" type="datetime-local" />
+    </div>
+    <div class="form-group">
+        <label asp-for="TotalPrice" class="control-label"></label>
+        <input asp-for="TotalPrice" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a asp-action="Bookings" class="btn btn-secondary">Cancelar</a>
+</form>

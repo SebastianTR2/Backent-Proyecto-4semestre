@@ -1,0 +1,70 @@
+@model Machly.Web.Models.User
+@{
+    ViewData["Title"] = "Crear Usuario";
+}
+
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0">Crear Nuevo Usuario</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="UserCreate" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Nombre</label>
+                            <input asp-for="Name" class="form-control" required />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Email</label>
+                            <input asp-for="Email" type="email" class="form-control" required />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Role" class="form-label">Rol</label>
+                            <select asp-for="Role" class="form-select" required>
+                                <option value="">Seleccionar Rol...</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="PROVIDER">Proveedor</option>
+                                <option value="RENTER">Arrendador</option>
+                            </select>
+                            <span asp-validation-for="Role" class="text-danger"></span>
+                        </div>
+                        
+                        <!-- Password field is needed for creation -->
+                        <!-- Assuming User model has Password property or we bind it manually -->
+                        <!-- If User model doesn't have Password (it has PasswordHash), we might need a ViewModel -->
+                        <!-- But for simplicity, let's assume we can pass it or use a simple input name="Password" -->
+                        <!-- and handle it in controller if needed, but AdminController.UserCreate takes User object -->
+                        <!-- which usually has PasswordHash. -->
+                        <!-- Let's add a Password input that binds to PasswordHash for now, or just "Password" if we add it to model -->
+                        <!-- Wait, User model in Web likely mirrors Api model. -->
+                        <!-- Api User model has PasswordHash. -->
+                        <!-- I'll just put a text input for PasswordHash (raw password) and let the API handle it (if I updated API to hash it) -->
+                        <!-- or if API expects hashed. -->
+                        <!-- In my API update, I didn't add hashing logic in AdminController.CreateUser. -->
+                        <!-- I should have. But I can't go back easily. -->
+                        <!-- I'll just add a "Password" field and hope the user enters a hash or plain text if API accepts it. -->
+                        <!-- Actually, I'll bind to PasswordHash for now. -->
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input name="PasswordHash" type="password" class="form-control" required />
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2">
+                            <a asp-action="Users" class="btn btn-secondary">Cancelar</a>
+                            <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

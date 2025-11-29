@@ -1,0 +1,29 @@
+@model Machly.Web.Models.Admin.OccupancyReportDto
+@{
+    ViewData["Title"] = "Ocupación de Maquinaria";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Ocupación de Maquinaria</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Máquina</th>
+                        <th>Reservas Totales</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <td>@item.MachineName</td>
+                            <td>@item.BookingCount</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+@model Machly.Web.Models.Admin.IncomeReportDto
+@{
+    ViewData["Title"] = "Reporte de Ingresos";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Reporte de Ingresos Mensuales</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <canvas id="incomeChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('incomeChart');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(Model.Monthly.Select(m => m.Month))),
+            datasets: [{
+                label: 'Ingresos (Bs)',
+                data: @Html.Raw(Json.Serialize(Model.Monthly.Select(m => m.Income))),
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,4 @@
+C:\Users\PC\Downloads\Machly\Machly\Machly\obj\Debug\Machly.csproj.AssemblyReference.cache
+C:\Users\PC\Downloads\Machly\Machly\Machly\obj\Debug\Machly.csproj.CoreCompileInputs.cache
+C:\Users\PC\Downloads\Machly\Machly\obj\Debug\Machly.csproj.AssemblyReference.cache
+C:\Users\PC\Downloads\Machly\Machly\obj\Debug\Machly.csproj.CoreCompileInputs.cache

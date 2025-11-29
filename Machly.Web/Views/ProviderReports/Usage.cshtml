@@ -1,0 +1,64 @@
+@model Machly.Web.Models.Reports.ProviderUsageReportDto
+@{
+    ViewData["Title"] = "Reporte de Uso";
+    var scope = (ViewData["Scope"]?.ToString() ?? "month").ToLowerInvariant();
+    string FilterButtonClass(string value) => scope == value ? "btn btn-primary btn-sm" : "btn btn-outline-secondary btn-sm";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Uso de Maquinaria</h1>
+        <p class="page-subtitle">Métricas de ocupación y rendimiento</p>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+            <span class="text-muted me-2">Rango:</span>
+            <a asp-action="Usage" asp-route-scope="month" class="@FilterButtonClass("month")">Mes</a>
+            <a asp-action="Usage" asp-route-scope="3m" class="@FilterButtonClass("3m")">3 Meses</a>
+            <a asp-action="Usage" asp-route-scope="year" class="@FilterButtonClass("year")">Año</a>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>Máquina</th>
+                    <th class="text-center">Reservas</th>
+                    <th class="text-center">Días Alquilados</th>
+                    <th class="text-center">% Ocupación</th>
+                    <th>Uso por Modalidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model.Machines.OrderByDescending(x => x.OccupancyPercentage))
+                {
+                    <tr>
+                        <td class="fw-bold">@m.MachineTitle</td>
+                        <td class="text-center">@m.TotalBookings</td>
+                        <td class="text-center">@m.TotalDaysRented.ToString("N1")</td>
+                        <td class="text-center">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <span class="me-2">@m.OccupancyPercentage.ToString("N1")%</span>
+                                <div class="progress" style="width: 50px; height: 6px;">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: @m.OccupancyPercentage%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            @foreach (var kvp in m.UsageByServiceType)
+                            {
+                                <span class="badge bg-light text-dark border me-1">@kvp.Key: @kvp.Value</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,165 @@
+@{
+    ViewData["Title"] = "Reportes";
+    Layout = "_Layout";
+    var income = ViewData["Income"] as List<Machly.Web.Services.IncomeReportItem>;
+    var occupancy = ViewData["Occupancy"] as List<Machly.Web.Services.OccupancyReportItem>;
+    var year = ViewData["Year"];
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Reportes y Estadísticas</h1>
+        <p class="page-subtitle">Análisis detallado del rendimiento de la plataforma</p>
+    </div>
+    <div class="ms-auto">
+        <form method="get" class="d-flex gap-2">
+            <select name="year" class="form-select" onchange="this.form.submit()">
+                @for (int i = DateTime.Now.Year; i >= DateTime.Now.Year - 5; i--)
+                {
+                    <option value="@i" selected="@(i == (int)year)">@i</option>
+                }
+            </select>
+        </form>
+    </div>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Income Chart -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Ingresos Mensuales (@year)</h6>
+            </div>
+            <div class="card-body">
+                <canvas id="incomeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Occupancy Table -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Top Máquinas (Ocupación)</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Máquina</th>
+                                <th class="text-end">Reservas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in occupancy)
+                            {
+                                <tr>
+                                    <td class="text-truncate" style="max-width: 150px;">@item.MachineTitle</td>
+                                    <td class="text-end fw-bold">@item.Count</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Income Chart
+        var ctx = document.getElementById("incomeChart");
+        var incomeData = @Html.Raw(Json.Serialize(income.Select(x => x.Total)));
+        var labels = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];
+
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Ingresos (Bs)",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: incomeData,
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            callback: function(value, index, values) {
+                                return 'Bs ' + value;
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': Bs ' + tooltipItem.yLabel;
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+}

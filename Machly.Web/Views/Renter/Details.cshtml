@@ -1,0 +1,190 @@
+@model Machly.Web.Models.Machine
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container py-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Explore">Explorar</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Galería de Fotos -->
+            <div class="card shadow-sm mb-4">
+                @if (Model.Photos != null && Model.Photos.Any())
+                {
+                    <div id="carouselPhotos" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            @for (int i = 0; i < Model.Photos.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+                                    <img src="@Model.Photos[i].Url" class="d-block w-100" style="height: 400px; object-fit: cover;" alt="Foto @(i+1)">
+                                </div>
+                            }
+                        </div>
+                        @if (Model.Photos.Count > 1)
+                        {
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselPhotos" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Anterior</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselPhotos" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Siguiente</span>
+                            </button>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                        <i class="fas fa-tractor fa-5x text-secondary"></i>
+                    </div>
+                }
+            </div>
+
+            <!-- Descripción -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">@Model.Title</h3>
+                    <div class="mb-3">
+                        <span class="badge bg-secondary">@Model.Type</span>
+                        <span class="badge bg-info text-dark">@Model.Category</span>
+                        @if (Model.WithOperator)
+                        {
+                            <span class="badge bg-success">Con Operador</span>
+                        }
+                    </div>
+                    <p class="card-text">@Model.Description</p>
+                    
+                    <hr />
+                    
+                    <h5>Tarifas</h5>
+                    <p class="h4 text-primary">Bs. @Model.PricePerDay.ToString("N2") <small class="text-muted fs-6">/ día</small></p>
+                    
+                    @if (Model.TariffsAgro != null)
+                    {
+                        <div class="row mt-3">
+                            <div class="col-md-4">
+                                <div class="border rounded p-2 text-center">
+                                    <small class="d-block text-muted">Por Hectárea</small>
+                                    <strong>Bs. @(Model.TariffsAgro.Hectarea?.ToString("N2") ?? "-")</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="border rounded p-2 text-center">
+                                    <small class="d-block text-muted">Por Tonelada</small>
+                                    <strong>Bs. @(Model.TariffsAgro.Tonelada?.ToString("N2") ?? "-")</strong>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Panel de Reserva -->
+            <div class="card shadow-sm sticky-top" style="top: 20px;">
+                <div class="card-body">
+                    <h5 class="card-title">Reservar</h5>
+                    
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["Error"]</div>
+                    }
+
+                    <form asp-action="CreateBooking" method="post">
+                        <input type="hidden" name="MachineId" value="@Model.Id" />
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Inicio</label>
+                            <input type="date" name="StartDate" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Fecha Fin</label>
+                            <input type="date" name="EndDate" class="form-control" required />
+                        </div>
+
+                        <!-- RF-07 & RF-08: Unified Service Type Selection -->
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Servicio</label>
+                            <select name="ServiceType" id="serviceTypeSelect" class="form-select">
+                                <option value="DIA">Por Día (Bs. @Model.PricePerDay.ToString("N2"))</option>
+                                @if (Model.PricePerHour > 0)
+                                {
+                                    <option value="HORA">Por Horas (Bs. @Model.PricePerHour.ToString("N2"))</option>
+                                }
+                                @if (Model.TariffsAgro != null)
+                                {
+                                    if (Model.TariffsAgro.Hectarea.HasValue)
+                                    {
+                                        <option value="HECTAREA">Por Hectáreas (Bs. @Model.TariffsAgro.Hectarea.Value.ToString("N2"))</option>
+                                    }
+                                    if (Model.TariffsAgro.Tonelada.HasValue)
+                                    {
+                                        <option value="TONELADA">Por Tonelada (Bs. @Model.TariffsAgro.Tonelada.Value.ToString("N2"))</option>
+                                    }
+                                    if (Model.TariffsAgro.Km.HasValue || Model.TariffsAgro.KmTariffs.Any())
+                                    {
+                                        <option value="KM">Por Kilómetro @(Model.TariffsAgro.Km.HasValue ? $"(Bs. {Model.TariffsAgro.Km.Value:N2})" : "")</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+
+                        <!-- Dynamic Inputs based on ServiceType -->
+                        <div id="inputHectareas" class="mb-3" style="display:none;">
+                            <label class="form-label">Hectáreas</label>
+                            <input type="number" step="0.01" name="Hectareas" class="form-control" placeholder="0.00" />
+                        </div>
+
+                        <div id="inputToneladas" class="mb-3" style="display:none;">
+                            <label class="form-label">Toneladas</label>
+                            <input type="number" step="0.01" name="Toneladas" class="form-control" placeholder="0.00" />
+                        </div>
+
+                        <div id="inputKm" class="mb-3" style="display:none;">
+                            <label class="form-label">Kilómetros</label>
+                            <input type="number" step="0.01" name="Kilometros" class="form-control" placeholder="0.00" />
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const select = document.getElementById('serviceTypeSelect');
+            const inputHectareas = document.getElementById('inputHectareas');
+            const inputToneladas = document.getElementById('inputToneladas');
+            const inputKm = document.getElementById('inputKm');
+
+            function updateVisibility() {
+                const val = select.value;
+                inputHectareas.style.display = 'none';
+                inputToneladas.style.display = 'none';
+                inputKm.style.display = 'none';
+
+                if (val === 'HECTAREA') inputHectareas.style.display = 'block';
+                if (val === 'TONELADA') inputToneladas.style.display = 'block';
+                if (val === 'KM') inputKm.style.display = 'block';
+            }
+
+            select.addEventListener('change', updateVisibility);
+            updateVisibility(); // Initial check
+        });
+    </script>
+}

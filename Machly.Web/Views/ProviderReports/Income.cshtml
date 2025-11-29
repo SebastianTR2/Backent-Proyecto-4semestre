@@ -1,0 +1,110 @@
+@model Machly.Web.Models.Reports.ProviderIncomeReportDto
+@{
+    ViewData["Title"] = "Reporte de Ingresos";
+    var scope = (ViewData["Scope"]?.ToString() ?? "month").ToLowerInvariant();
+    string FilterButtonClass(string value) => scope == value ? "btn btn-primary btn-sm" : "btn btn-outline-secondary btn-sm";
+}
+
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Reporte de Ingresos</h1>
+        <p class="page-subtitle">Análisis detallado de tus ganancias</p>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2 align-items-center mb-3">
+            <span class="text-muted me-2">Rango:</span>
+            <a asp-action="Income" asp-route-scope="month" class="@FilterButtonClass("month")">Mes</a>
+            <a asp-action="Income" asp-route-scope="3m" class="@FilterButtonClass("3m")">3 Meses</a>
+            <a asp-action="Income" asp-route-scope="year" class="@FilterButtonClass("year")">Año</a>
+        </div>
+        <h2 class="display-4 text-primary fw-bold">Bs. @Model.TotalIncome.ToString("N2")</h2>
+        <p class="text-muted">Ingresos totales en el periodo seleccionado</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Ingresos por Máquina</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="machineChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Ingresos por Modalidad</h5>
+            </div>
+            <div class="card-body">
+                <canvas id="serviceChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header bg-white">
+        <h5 class="card-title mb-0">Evolución Mensual</h5>
+    </div>
+    <div class="card-body">
+        <canvas id="monthChart" height="100"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Data from Model
+        const machineData = @Json.Serialize(Model.Machines);
+        const serviceData = @Json.Serialize(Model.IncomeByServiceType);
+        const monthData = @Json.Serialize(Model.IncomeByMonth);
+
+        // Machine Chart
+        new Chart(document.getElementById('machineChart'), {
+            type: 'bar',
+            data: {
+                labels: machineData.map(m => m.machineTitle),
+                datasets: [{
+                    label: 'Ingresos (Bs)',
+                    data: machineData.map(m => m.income),
+                    backgroundColor: '#0d6efd'
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Service Chart
+        new Chart(document.getElementById('serviceChart'), {
+            type: 'doughnut',
+            data: {
+                labels: Object.keys(serviceData),
+                datasets: [{
+                    data: Object.values(serviceData),
+                    backgroundColor: ['#198754', '#ffc107', '#0dcaf0', '#dc3545', '#6610f2']
+                }]
+            },
+            options: { responsive: true }
+        });
+
+        // Month Chart
+        new Chart(document.getElementById('monthChart'), {
+            type: 'line',
+            data: {
+                labels: Object.keys(monthData),
+                datasets: [{
+                    label: 'Ingresos Mensuales',
+                    data: Object.values(monthData),
+                    borderColor: '#0d6efd',
+                    tension: 0.1
+                }]
+            },
+            options: { responsive: true }
+        });
+    </script>
+}

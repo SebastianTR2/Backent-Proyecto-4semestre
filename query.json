@@ -1,0 +1,3 @@
+{
+    "query": "{ machines { id title pricePerDay } }"
+}
